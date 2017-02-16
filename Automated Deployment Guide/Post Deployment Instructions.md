@@ -2,6 +2,13 @@
 
 This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-energy-demand-forecasting/tree/master/Manual%20Deployment%20Guide).
 
+###Quick links
+[Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
+
+[Visualization Steps](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) - instructions to connect up a Power BI dashboard to your deployment that visualized the results.
+
+[Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
+
 # Architecture
 **Architecture diagram needs to be cleaned up and added**
 The architecture diagram shows various Azure services that are deployed by [Energy Demand Forecast Solution](palceholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
