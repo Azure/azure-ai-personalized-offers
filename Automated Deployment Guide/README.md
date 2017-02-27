@@ -17,8 +17,6 @@ Today’s digital marketing teams can build this intelligence using the data gen
 
 #### Estimated Provisioning Time: <Guide type="EstimatedTime">45 Minutes</Guide>
 <Guide type="Description">
-
-**REPLACE THIS SECTION**
 The Cortana Intelligence Suite provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building an demand forecasting for energy solution.
 
 This solution combines several Azure services to provide powerful advantages. Event Hubs collects real-time consumption data. Stream Analytics aggregates the streaming data and makes it available for visualization, as well as updating the data used in making personalized offers to the customer. Azure DocumentDB stores the customer, product and offer information. Azure Storage is used to manage the queues that simulate user interaction and for the archival storage of training data if the extension to this solution is built. Azure Functions are used as a coordinator for the user simulation and as the central portion of the solution for generating personalized offers. Machine Learning implements and executes the product recommendations and when no user history is available Azure Redis Cache is used to provide pre-computed product recommendations for the customer. PowerBI visualizes the real-time activity for the system and with the data from DocumentDB the performance of the various offers.
