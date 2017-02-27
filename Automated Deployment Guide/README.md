@@ -27,17 +27,15 @@ The 'Deploy' button will launch a workflow that will deploy an instance of the s
 ![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
 
 ## Technical details and workflow
-1.	An **Azure Function** begins the flow of the system by taking users from **Azure DocumentDB** and placing them in an **Azure Storage Queue**.
+1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**.
 
-2. An **Azure Function** reads the initial user list and starts generating user activity that is placed in another **Azure Storage Queue**.
+2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure DocumentDb**, product recommendations are made from **Azure Machine Learning** (if no history for the user exists then Frequently Bought Together based recommendations are read in from **Azure Redis Cache**). 
 
-3. This simulated user activity is read by the central **Azure Function** and the process for producing a personalized offer begins here.
+3. Raw user activity data (Product and Offer Clicks), Offers made to users, and performance data (for **Azure Functions** and **Azure Machine Learning**) are sent to **Azure Event Hub**.
 
-4. The user activity is used to bring in data from **Azure DocumentDB** providing some history for the user, either **Azure Machine Learning** or **Azure Redis Cache** are used to provide product recommendations and finally the offer is produced with logic in the function and information provided by **Azure DocumentDB** and **Azure Redis Cache**.
+5. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5. The user response is put back on an **Azure Storage Queue** and the user activity, performance data and, potentially, training data are sent to an **Azure Event Hub** for further processing.
-
-6.	**Azure Stream Analytics** analyze the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB* and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. If the training extension is completed, training data is written to **Azure Blog Storage**.
+6.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB* and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
 </Guide>
 
 #### Disclaimer
