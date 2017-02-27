@@ -1,8 +1,10 @@
-# [Energy Demand Forecast Solution](https://go.microsoft.com/fwlink/?linkid=831187)
+# [Personalized Offers for Retail Solution](placeholder for gallery url)
 
 This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-energy-demand-forecasting/tree/master/Manual%20Deployment%20Guide).
 
 ###Quick links
+[Starting the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#starting-the-solution) - see how you can monitor the resources that have been deployed to your subscription.
+
 [Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
 
 [Visualization Steps](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) - instructions to connect up a Power BI dashboard to your deployment that visualized the results.
@@ -10,27 +12,24 @@ This document is focusing on the post deployment instructions for the automated 
 [Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
 
 # Architecture
-**Architecture diagram needs to be cleaned up and added**
-The architecture diagram shows various Azure services that are deployed by [Energy Demand Forecast Solution](palceholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers for Retail Solution](palceholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
 
-![Solution Diagram](placeholder)
+![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
 
 
-1.	The sample data is streamed by newly deployed **Azure Web Jobs**.
+1.	An **Azure Function** begins the flow of the system by taking users from **Azure DocumentDB** and placing them in an **Azure Storage Queue**.
 
-2.	This synthetic data feeds into the **Azure Event Hubs** and **Azure SQL** service as data points or events, that will be used in the rest of the solution flow.
+2. An **Azure Function** reads the initial user list and starts generating user activity that is placed in another **Azure Storage Queue**.
 
-3.	**Azure Stream Analytics** analyze the data to provide near real-time analytics on the input stream from the event hub and directly publish to PowerBI for visualization.
+3. This simulated user activity is read by the central **Azure Function** and the process for producing a personalized offer begins here.
 
-4.	The **Azure Machine Learning** service is used to make forecast on the energy demand of particular region given the inputs received.
+4. The user activity is used to bring in data from **Azure DocumentDB** providing some history for the user, either **Azure Machine Learning** or **Azure Redis Cache** are used to provide product recommendations and finally the offer is produced with logic in the function and information provided by **Azure DocumentDB** and **Azure Redis Cache**.
 
-5.	**Azure SQL Database** is used to store the prediction results received from the **Azure Machine Learning** service. These results are then consumed in the **Power BI** dashboard.
+5. The user response is put back on an **Azure Storage Queue** and the user activity, performance data and, potentially, training data are sent to an **Azure Event Hub** for further processing.
 
-6. **Azure Data Factory** handles orchestration, and scheduling of the hourly model retraining.
+6.	**Azure Stream Analytics** analyze the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB* and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. If the training extension is completed, training data is written to **Azure Blog Storage**.
 
-7.	Finally, **Power BI** is used for results visualization, so that users can monitor the energy consumption from a region in real time and use the forecast demand to optimize the power generation or distribution process.
-
-All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to monitor things that you have deployed and create visualizations in Power BI.
+All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
 
 # Post Deployment Instructions
 Once the solution is deployed to the subscription, you can see the services deployed by clicking the resource group name on the final deployment screen in the CIS.
@@ -39,6 +38,7 @@ Once the solution is deployed to the subscription, you can see the services depl
 
 This will show all the resources under this resource groups on [Azure management portal](https://portal.azure.com/).
 
+## **Starting the solution**
 After successful deployment, the entire solution is automatically started on cloud. You can monitor the progress from the following resources.
 
 ## **Monitor progress**
@@ -72,7 +72,7 @@ You can view your forecasting model on machine learning experiment by navigating
 Power BI dashboard can be used to visualize the real-time energy consumption data as well as the updated energy forecast results. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
 
-### Visualize Energy Data from Database
+### Visualize Personalized Offer Data from the Azure DocumentDB
 
 The essential goal of this part is to get the demand forecast of each region and visualize it. Power BI can directly connect to an Azure SQL database as its data source, where the prediction results are stored.
 
@@ -112,7 +112,7 @@ The essential goal of this part is to get the demand forecast of each region and
 
       ![Dashboard Example](Figures/PowerBI-11.png)
 
-### Visualize Energy Data From Real-time Data Stream
+### Visualize Solutioin Activity From Real-time Data Stream
 
 The essential goal of this part is to visualize the real-time energy consumption data. Power BI can connect to a real-time data stream through Azure Stream Analytics.
 
