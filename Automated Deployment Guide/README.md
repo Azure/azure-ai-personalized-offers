@@ -15,33 +15,34 @@ Today’s digital marketing teams can build this intelligence using the data gen
 
 ## <a name="Description"></a>Description
 
-#### Estimated Provisioning Time: <Guide type="EstimatedTime">X Minutes</Guide>
+#### Estimated Provisioning Time: <Guide type="EstimatedTime">45 Minutes</Guide>
 <Guide type="Description">
 
 **REPLACE THIS SECTION**
 The Cortana Intelligence Suite provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building an demand forecasting for energy solution.
 
-This solution combines several Azure services to provide powerful advantages. Event Hubs collects real-time consumption data. Stream Analytics aggregates the streaming data and makes it available for visualization. Azure SQL stores and transforms the consumption data. Machine Learning implements and executes the forecasting model. PowerBI visualizes the real-time energy consumption as well as the forecast results. Finally, Data Factory orchestrates and schedules the entire data flow.
+This solution combines several Azure services to provide powerful advantages. Event Hubs collects real-time consumption data. Stream Analytics aggregates the streaming data and makes it available for visualization, as well as updating the data used in making personalized offers to the customer. Azure DocumentDB stores the customer, product and offer information. Azure Storage is used to manage the queues that simulate user interaction and for the archival storage of training data if the extension to this solution is built. Azure Functions are used as a coordinator for the user simulation and as the central portion of the solution for generating personalized offers. Machine Learning implements and executes the product recommendations and when no user history is available Azure Redis Cache is used to provide pre-computed product recommendations for the customer. PowerBI visualizes the real-time activity for the system and with the data from DocumentDB the performance of the various offers.
 
-The 'Deploy' button will launch a workflow that will deploy an instance of the solution within a Resource Group in the Azure subscription you specify. The solution includes multiple Azure services (described below) along with a web job that simulates data so that immediately after deployment you have a working end-to-end solution. The sample data of this solution is simulated from publicly available data from the NYISO.
+The 'Deploy' button will launch a workflow that will deploy an instance of the solution within a Resource Group in the Azure subscription you specify. The solution includes multiple Azure services (described above) and provides at the end a few short instructions necessary to have a working end-to-end solution with simulated user behavior. 
 
 **Solution diagram coming**
 ## Solution Diagram
-![Solution Diagram]()
+![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
 
 ## Technical details and workflow
-1.	The sample data is streamed by newly deployed **Azure Functions**.
+1.	An **Azure Function** begins the flow of the system by taking users from **Azure DocumentDB** and placing them in an **Azure Storage Queue**.
 
-2.	This synthetic data feeds into the **Azure Event Hubs** and **Azure SQL** service as data points or events, that will be used in the rest of the solution flow.
+2. An **Azure Function** reads the initial user list and starts generating user activity that is placed in another **Azure Storage Queue**.
 
-3.	**Azure Stream Analytics** analyze the data to provide near real-time analytics on the input stream from the event hub and directly publish to PowerBI for visualization.
+3. This simulated user activity is read by the central **Azure Function** and the process for producing a personalized offer begins here.
 
-4.	The **Azure Machine Learning** service is used to make forecast on the energy demand of particular region given the inputs received.
+4. The user activity is used to bring in data from **Azure DocumentDB** providing some history for the user, either **Azure Machine Learning** or **Azure Redis Cache** are used to provide product recommendations and finally the offer is produced with logic in the function and information provided by **Azure DocumentDB** and **Azure Redis Cache**.
 
-5.	**Azure SQL Database** is used to store the prediction results received from the **Azure Machine Learning** service. These results are then consumed in the **Power BI** dashboard.
+5. The user response is put back on an **Azure Storage Queue** and the user activity, performance data and, potentially, training data are sent to an **Azure Event Hub** for further processing.
 
-6. **Azure Data Factory** handles orchestration, and scheduling of the hourly model retraining.
-
-7.	Finally, **Power BI** is used for results visualization, so that users can monitor the energy consumption from a region in real time and use the forecast demand to optimize the power generation or distribution process.
+6.	**Azure Stream Analytics** analyze the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB* and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. If the training extension is completed, training data is written to **Azure Blog Storage**.
 </Guide>
 
+#### Disclaimer
+
+©2017 Microsoft Corporation. All rights reserved.  This information is provided "as-is" and may change without notice. Microsoft makes no warranties, express or implied, with respect to the information provided here.  Third party data was used to generate the solution.  You are responsible for respecting the rights of others, including procuring and complying with relevant licenses in order to create similar datasets.
