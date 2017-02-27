@@ -112,7 +112,7 @@ The essential goal of this part is to get the demand forecast of each region and
 
       ![Dashboard Example](Figures/PowerBI-11.png)
 
-### Visualize Solutioin Activity From Real-time Data Stream
+### Visualize Solution Activity From Real-time Data Stream
 
 The essential goal of this part is to visualize the real-time energy consumption data. Power BI can connect to a real-time data stream through Azure Stream Analytics.
 
