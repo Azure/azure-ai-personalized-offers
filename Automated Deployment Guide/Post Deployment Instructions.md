@@ -2,7 +2,7 @@
 
 This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide).
 
-###Quick links
+### Quick links
 [Starting the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#starting-the-solution) - see how you can monitor the resources that have been deployed to your subscription.
 
 [Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
@@ -69,12 +69,12 @@ After successful deployment, there are a few steps you need to take to start you
 	c. Find the **hosts.json** file and click on it. Replace the current content with the following:
 
         {
-        	"queues": 
-        	{
-              "maxPollingInterval": 700,
-              "batchSize": 32,
-              "maxDequeueCount": 2
-            }
+			"queues": 
+			{
+				"maxPollingInterval": 700,
+				"batchSize": 32,
+				"maxDequeueCount": 2
+			}
         }
 	d. Once this is saved (This can be seen at the top right of the editor) you can close this new tab	
 4. On the Azure Functions web page we now need to enable each of the functions that are needed for the application. For the **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**, **UserSimulation**, and **UserSimulationStartup** the following steps need to be taken:
