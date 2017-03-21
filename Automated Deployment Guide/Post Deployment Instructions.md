@@ -17,9 +17,9 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 ![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
 
 
-1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**.
+1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**, these would not be part of a production solution.
 
-2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure DocumentDb**, product recommendations are made from **Azure Machine Learning** (if no history for the user exists then Frequently Bought Together based recommendations are read in from **Azure Redis Cache**). 
+2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure DocumentDb**, product popularity probability is returned by **Azure Machine Learning** (if no history for the user exists then cold start values for product popularity are read in from **Azure Redis Cache**). 
 
 3. Raw user activity data (Product and Offer Clicks), Offers made to users, and performance data (for **Azure Functions** and **Azure Machine Learning**) are sent to **Azure Event Hub**.
 
@@ -35,70 +35,135 @@ Once the solution is deployed to the subscription, you can see the services depl
 
 ![CIS resource group link](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/CIS_ResourceGroup.png)
 
-This will show all the resources under this resource groups on [Azure management portal](https://portal.azure.com/).
+This will show all the resources under this resource group on [Azure management portal](https://portal.azure.com/). This is a good time to pin the resource to your main Azure Portal page to make it easy to return to in any of the following steps. The pin icon can be found at the top right corner of the Resource Group Overview Blade.
 
 ## **Starting the solution**
-After successful deployment, there are a few steps you need to take to start your solution:
+After successful deployment, there are a few steps you need to take to start your solution and to scale it to a reasonable simulation level:
 
-1.  
+1. From the deployment page or from the Resource Group Page click on the **PersonalizedOffers** link of type **Stream Analytics Job**. On the left side click on the **Outputs** link to open the Outputs blade. In the Outputs blade you will see the different types of outputs that originate from the Stream Analytics Job.  For each of the outputs where the **SINK** is **Data Lake Store** or **Power BI** you will need to do the following:
+	
+	a. Click on the Output row to be updated.
+	
+	b. Click on the **Renew Authorization** button. This will take you through an authorization flow.
+	
+	c. When you return from the authorization flow the **Save** button should be enabled. Click **Save**. If by chance the **Save** button does not enable or the authorization flow does not pop-up, you may need to close your browser and return to the [Azure Portal](http://portal.azure.com) and repeat this step for the remaining outputs.
+	
+	d. Close the Outputs blade and return to the Overview blade. At the top of the blade click the **Start** button to begin the Stream Analytics Job. When prompted select **now** as the time to begin the job. 
+
+2. From the deployment page or from the Resource Group page select the service that begins with ***hosting*** and is of type ***App Service*** from your resource group page in the Azure Portal.
+
+	a. Select the **Scale out** blade from the left navigation.
+	
+	b. Select **and instance count that I enter manually** for the **Scale by** setting.
+	
+	c. Drag the **instances** slider until the **PREDICTED INSTANCES** says **4**.
+	
+	d. Click **Save** 
+
+3. From the deployment page or from the Resource Group page click on the Functions App. The name will begin with **functions-** and will be of type **App Service**.
+
+	a. Click on the **Function app settings** link on the lower left side of the blade.
+	
+	b. Click on **Go to App Service Editor**. This will open a new window with an editor for coding Azure Functions.
+	
+	c. Find the **hosts.json** file and click on it. Replace the current content with the following:
+
+        {
+        	"queues": 
+        	{
+              "maxPollingInterval": 700,
+              "batchSize": 32,
+              "maxDequeueCount": 2
+            }
+        }
+	d. Once this is saved (This can be seen at the top right of the editor) you can close this new tab	
+4. On the Azure Functions web page we now need to enable each of the functions that are needed for the application. For the **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**, **UserSimulation**, and **UserSimulationStartup** the following steps need to be taken:
+
+	a. Click on the function from the left navigation.
+	
+	b. Select the **Manage** tab for that Function.
+	
+	c. Set the **Function State** to **Enabled**.
+	
+5. Now we need to run the **RedisProductTrigger** and **UpdateTopUsersCache** Functions:
+
+	a. Click on the function from the left navigation.
+	
+	b. Select the **Develop** tab for that Function.
+	
+	c. Click **Run** at the top of the Function editor.
+	
+	d. You should see something like the following:
+	
+        2017-03-18T11:08:20.867 Function started (Id=efacd569-5c8b-4380-b23d-4a18e7fee5cc)
+        2017-03-18T11:08:21.164 C# Timer trigger function executed at: 3/18/2017 11:08:21 AM
+        2017-03-18T11:08:22.089 Function completed (Success, Id=efacd569-5c8b-4380-b23d-4a18e7fee5cc)
+
+6. The last step is to start the simulation with the **UserSimulationStartup** Function. The steps are the same as the ones in **Step 5** above. The only difference will be this function will take longer to complete.
+
+Now your simulation is running and is active. The information below will help you see how everything is running.
 
 ## **Monitor progress**
 
-#### Web Jobs
-6 Azure Web jobs are created during the deployment. You can monitor the web jobs by clicking the link on your deployment page.
-* One-time running web jobs are used to start certain Azure services.
-  * PastData: Copies the historical consumption and weather sample data to Azure SQL.
-  * GalleryToMLSvc: Creates demand forecast ML experiment and publish it as ML WebService.
-  * StartPipelines: Starts the Azure Data Factory pipelines.
-* Continuous running web jobs are used as data generator.
-  * FiveMinsDataToEH: Simulates energy consumption data and sends it to Event Hub every 5 minutes.
-  * FiveMinsDataToSQL: Simulates energy consumption data and sends it to Azure SQL every 5 minutes.
-  * WeatherHourlyDataToSQL: Simulates weather data and sends it to Azure SQL every hour.
+For each of the services in this solution going to from the resource group page to the service will provide you with some information on how the service is running. Often there is a Metrics blade listed on the left side of that service that will provide more information. For each of the services below a link is provided that explains monitoring each of the services in more detail. 
 
-#### Azure Data Factory
+#### Azure App Service ####
+For more information on how to monitor Azure App Service you can take a look [here](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-monitor).
 
-Azure Data Factory is used to schedule machine learning model. You can monitor the data pipelines by clicking the link on your deployment page.
+#### Azure DocumentDB ####
+For more information on how to monitor DocumentDB take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-monitor-accounts).
 
-*Note: The Web Jobs need time to finish the first run. It is normal to see errors in your Azure Data Factory pipelines right after you deployed the solution.*
+#### Azure Functions ####
 
-#### Azure SQL Database
-
-Azure SQL database is used to save the data and forecast results. You can use the SQL server and database name showing on the last page of deployment with the username and password that you set up in the beginning of your deployment to log in your database and check the results.
+For more information on how to monitor Azure Functions take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-monitoring).
 
 #### Azure Machine Learning Web Service
 
-You can view your forecasting model on machine learning experiment by navigating to your Machine Learning Workspace. The machine learning model is deployed as Azure Web Service to be scheduled every hour for retraining by the Azure Data Factory. You can view your the web service API manual by clicking the link on your deployment page.
+You can view the machine learning experiment by navigating to your Machine Learning Workspace. The machine learning model is deployed as an Azure Web Service. For more information on monitoring the web service endpoint take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice).
+
+
+#### Azure Redis Cache ####
+
+For more information on how to monitor Azure Redis Cache take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/redis-cache/cache-how-to-monitor).
 
 ## **Visualization**
 Power BI dashboard can be used to visualize the real-time energy consumption data as well as the updated energy forecast results. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
 
-### Visualize Personalized Offer Data from the Azure DocumentDB
+### Visualize Personalized Offer Data from Azure DocumentDB
 
-The essential goal of this part is to get the demand forecast of each region and visualize it. Power BI can directly connect to an Azure SQL database as its data source, where the prediction results are stored.
+The goal of this part is to get a visual overview of how the Personalized Offers for Retail Solution is running. Power BI can directly connect to an Azure DocumentDB as its data source, where the solution results are stored.
 
 > Note:  1) In this step, the prerequisite is to download and install the free software [Power BI desktop](https://powerbi.microsoft.com/desktop). 2) We recommend you start this process 2-3 hours after you deploy the solution so that you have more data points to visualize.
 
 1.  Get the database credentials.
 
-    You can find your database and server name on the page when you finish your deployment. The SQL username and password will be the ones you choose in the beginning of the deployment.
-
+    You can find your DocumentDB URI and Primary Key. Go to the Document DB page for your solution by going to the Resource page for your solution and selecting the Document DB Service. On the left side of the page there is a **Keys** section where this information can be found.
+    
 2.	Update the data source of the Power BI file
-  -  Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
+	
+  - Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
 
-  -	In this GitHub repository, you can download the **'EnergyDemandForecastSolution.pbix'** file under the folder **'Power BI'** and then open it. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
+  -	In this GitHub repository, you can download the **'PersonalizedOffersSolution.pbix'** file under the folder **'Power BI'** and then open it. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
 
-  - On the top of the file, click **‘Edit Queries’** drop down menu. Then choose **'Data Source Settings'**.
-  ![](Figures/PowerBI-7.png)
+  - On the top of the file, click **‘Edit Queries’** button.
 
-  - In the pop out window, click **'Change Source'**, then replace the **"Server"** and **"Database"** with	your own server and database names and click **"OK"**. For server name, make sure you specify the port 1433 in the end of your server string
-  (**YourSolutionName.database.windows.net, 1433**). After you finish editing, close the 'Data Source Settings' window.
+  - In the pop out window, you will see 9 Queries on the left hand side and on the right side you will see Query Settings. For each of the following queries: **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**, follow the steps below:
+  
+  	- Select the query on the left
+  	- Click the **gear** icon to the right of **Source** in the **Applied Steps** section of the **Query Settings** 
+  	- Put in the URI that you got from DocumentDB into the **URL** field and click **OK**
+  	- A prompt should ask you for the Account Key enter the Primary Key from DocumentDB in the **Account key** field (You should only have to do this for the first query)
+  	- Repeat these steps for the other queries listed above.
+  
+  - For the remaining two queries ( ) there are some additional steps to take:
+  	- 
 
-  - On the top of the screen, you will see a message. Click **'Apply Changes'**. A new window will pop out and ask for database credentials. Click **'Database'** on the left of the window, enter your SQL credentials. For ***'Select which level to apply these settings to'***, choose the second one with database name. Then click ***'Connect'***.
+  - On the top of the screen, you will see a button **'Close & Apply Changes'**,
 
-  - Now the dashboard is updated to connect to your database. In the backend, model is scheduled to be refreshed every 1 hour. You can click **'Refresh'** button on the top to get the latest visualization as time moving forward.
+  - Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
 
-3. (Optional) Publish the dashboard to [Power BI online](http://www.powerbi.com/).
+1. (Optional) Publish the dashboard to [Power BI online](http://www.powerbi.com/).
     Note that this step needs a Power BI account (or Office 365 account).
 
       - Click **"Publish"** on the top panel. Choose **'My Workspace'** and few seconds later a window appears displaying "Publishing succeeded".
@@ -115,34 +180,18 @@ The essential goal of this part is to get the demand forecast of each region and
 
 ### Visualize Solution Activity From Real-time Data Stream
 
-The essential goal of this part is to visualize the real-time energy consumption data. Power BI can connect to a real-time data stream through Azure Stream Analytics.
+The goal of this part is to visualize the real-time information about our solution. Power BI can connect to a real-time data stream through Azure Stream Analytics.
 
 > Note: A [Power BI online](http://www.powerbi.com/) account is required to perform the following steps. If you don't have an account, you can [create one here](https://powerbi.microsoft.com/pricing).
 
-1.  Add Power BI output in Azure Stream Analytics (ASA).
-
-  - Navigate to [Azure management portal](https://portal.azure.com) and login with your username and password. On the left tab click ***Resource groups*** and search for the solution you just deployed. The name of the resource group is the same as the name you choose for the solution.
-
-  - Click your resource group and locate the stream analytics job. The name of the job should be: YourSolutionName+"saJob" (i.e. energydemosaJob). Click the Stream Analytics job and then click **'Outputs'** from the panel on the right.
-
-    ![Add Power BI output on ASA 1](Figures/PowerBI-1.png)
-
-  - On the new window, click **'+Add'** on the top, and then it will show a window asking for information of the output. Under **'Sink'**, choose **'Power BI'**, then click **'Authorize'**. In the pop out window, log in with your Power BI account.
-
-  - Once you successfully authorize your Power BI account, fill in other information as follows. Set the **Output Alias** as **'outputPBI'**. Set your **'Dataset Name'** and **'Table Name'** as **'EnergyForecastStreamData'**. Click **'Create'** once you finish.
-
-  - Now you have added the Power BI output, you can click ![Start](Figures/PowerBI-2.png) at the top of the page to start the Stream Analytics job. You will get a confirmation message (e.g. 'Streaming Job started successfully').
-
-  - For other details, you can refer to the instructions in [Azure Stream Analytics & Power BI: A real-time analytics dashboard for real-time visibility of streaming data](https://azure.microsoft.com/en-us/documentation/articles/stream-analytics-power-bi-dashboard/).
-
-2. Login on [Power BI online](http://www.powerbi.com)
+1. Login on [Power BI online](http://www.powerbi.com)
 
     -   On the left panel Datasets section in My Workspace, you should be able to see a new dataset showing on the left panel of Power BI. This is the streaming data you pushed from Azure Stream Analytics in the previous step.
 
     -   Make sure the ***Visualizations*** pane is open and is shown on the
     right side of the screen.
 
-3. Now you can directly create a visualization on Power BI online. We will use this example to show you how to create the "Demand by Timestamp" tile:
+2. Now you can directly create a visualization on Power BI online. We will use this example to show you how to create the "Demand by Timestamp" tile:
 	-	Click dataset **EnergyForecastStreamData** on the left panel Datasets section.
 
 	-	Click **"Line Chart"** icon.![Line Chart](Figures/PowerBI-3.png)
@@ -160,4 +209,15 @@ The essential goal of this part is to visualize the real-time energy consumption
 You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
 
 ## **Scaling**
-Insert paragraph here on how to think about scaling this solution.
+Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned.  For some additional ideas on scaling see the links below:
+
+* **Azure Traffic Manager** - Used to route a user request to the service endpoint nearest to the user. [Documentation Link](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview)
+* **Azure Application Gateway** - Load Balancing your Application. [Documentation Link](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-introduction)
+* **Azure Machine Learning** - Add more endpoints to handle additional load. [Documentation Link](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-scaling-webservice)
+* Make use of **Partitioning** all the way from ingestion in **Azure Event Hub**, processing in **Azure Stream Analytics** and **Azure Functions**, and to storage in **Azure Document DB**.
+	* Event Hub Partitioning - [Documentation Link 1](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Documentation Link 2](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide#partition-key)
+	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
+	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)
+	* [Partitioning in DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-partition-data)
+	* Azure Functions scaling via [Service Plan](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) and by editing the [host.json](https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json) file
+	
