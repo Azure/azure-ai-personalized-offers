@@ -61,8 +61,7 @@ After successful deployment, there are a few steps you need to take to start you
 	i. Click the ***Overview*** section of the menu on the left side.
 	
 	j. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
-	
-	c. When you return from the authorization flow the **Save** button should be enabled. Click **Save**. If by chance the **Save** button does not enable or the authorization flow does not pop-up, you may need to close your browser and return to the [Azure Portal](http://portal.azure.com) and repeat this step for the remaining outputs.
+
 
 2. From the deployment page or from the Resource Group page click on the Functions App. The name will begin with **functions-** and will be of type **App Service**.
 
