@@ -40,27 +40,31 @@ This will show all the resources under this resource group on [Azure management 
 ## **Starting the solution**
 After successful deployment, there are a few steps you need to take to start your solution and to scale it to a reasonable simulation level:
 
-1. From the deployment page or from the Resource Group Page click on the **PersonalizedOffers** link of type **Stream Analytics Job**. On the left side click on the **Outputs** link to open the Outputs blade. In the Outputs blade you will see the different types of outputs that originate from the Stream Analytics Job.  For each of the outputs where the **SINK** is **Data Lake Store** or **Power BI** you will need to do the following:
+1. From the deployment page or from the Resource Group Page we will need to start each of the **Stream Analytics Jobs**.
 	
-	a. Click on the Output row to be updated.
+	a. From the resource group page or from the deployment page click on the link for **StreamProductViewsJob**, this should open it in a new tab or window.
 	
-	b. Click on the **Renew Authorization** button. This will take you through an authorization flow.
+	b. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
+	
+	c. From the resource group page or from the deployment page click on the link for **StreamOfferViewsJob**, this should open it in a new tab or window.
+	
+	d. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
+	
+	e. From the resource group page or from the deployment page click on the link for **StreamClickCountsJob**, this should open it in a new tab or window.
+	
+	f. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
+	
+	g. From the resource group page or from the deployment page click on the link for **StreamRawDataJob**, this should open it in a new tab or window.
+	
+	h. Click on the ***Outputs*** section of the menu on the left side. In the **Outputs** blade you will see two Outputs: **clickstreamdl** and **offersdl**. For each of these you will need to click on the output. The new blade that opens with the details will have a ***Renew Authorization*** button on it. Click the button and follow the authentication prompts. Once the output is authenticated, click the ***Save*** button and repeat with the second output.
+		
+	i. Click the ***Overview*** section of the menu on the left side.
+	
+	j. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
 	
 	c. When you return from the authorization flow the **Save** button should be enabled. Click **Save**. If by chance the **Save** button does not enable or the authorization flow does not pop-up, you may need to close your browser and return to the [Azure Portal](http://portal.azure.com) and repeat this step for the remaining outputs.
-	
-	d. Close the Outputs blade and return to the Overview blade. At the top of the blade click the **Start** button to begin the Stream Analytics Job. When prompted select **now** as the time to begin the job. 
 
-2. From the deployment page or from the Resource Group page select the service that begins with ***hosting*** and is of type ***App Service*** from your resource group page in the Azure Portal.
-
-	a. Select the **Scale out** blade from the left navigation.
-	
-	b. Select **and instance count that I enter manually** for the **Scale by** setting.
-	
-	c. Drag the **instances** slider until the **PREDICTED INSTANCES** says **4**.
-	
-	d. Click **Save** 
-
-3. From the deployment page or from the Resource Group page click on the Functions App. The name will begin with **functions-** and will be of type **App Service**.
+2. From the deployment page or from the Resource Group page click on the Functions App. The name will begin with **functions-** and will be of type **App Service**.
 
 	a. Click on the **Function app settings** link on the lower left side of the blade.
 	
@@ -72,12 +76,12 @@ After successful deployment, there are a few steps you need to take to start you
 			"queues": 
 			{
 				"maxPollingInterval": 700,
-				"batchSize": 32,
+				"batchSize": 2,
 				"maxDequeueCount": 2
 			}
         }
 	d. Once this is saved (This can be seen at the top right of the editor) you can close this new tab	
-4. On the Azure Functions web page we now need to enable each of the functions that are needed for the application. For the **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**, **UserSimulation**, and **UserSimulationStartup** the following steps need to be taken:
+3. On the Azure Functions web page we now need to enable each of the functions that are needed for the application. For the **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**, **UserSimulation**, and **UserSimulationStartup** the following steps need to be taken:
 
 	a. Click on the function from the left navigation.
 	
@@ -156,8 +160,12 @@ The goal of this part is to get a visual overview of how the Personalized Offers
   	- A prompt should ask you for the Account Key enter the Primary Key from DocumentDB in the **Account key** field (You should only have to do this for the first query)
   	- Repeat these steps for the other queries listed above.
   
-  - For the remaining two queries ( ) there are some additional steps to take:
-  	- 
+  - For the these **userProductViews** there are some additional steps to take. Each of the **Applied Steps** must be examined to see that the right values are there.
+  	- click on the 6th step **Expanded productviews** gear icon.
+  	- in this window click the **Load More** link near the bottom.
+  	- verify that all products 1-25 are there in the list and select them all (using the **Select All Columns** checkbox at the top).
+  	- click **OK**
+  	- click on the next step **Renamed Columns1** and make sure the product number columns at the top are all correct and of type: 1, 2, 3, ... 25 for the columns representing the products. If prompted to okay the change go ahead and click **Insert**.
 
   - On the top of the screen, you will see a button **'Close & Apply Changes'**,
 
