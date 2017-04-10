@@ -71,7 +71,7 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 	
   - Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
 
-  -	In this GitHub repository, you can download the **'PersonalizedOffersSolution.pbix'** file under the folder **'Power BI'** and then open it. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
+  -	In this GitHub repository, you can download either **'PersonalizedOffersSolutionLandscape.pbix'** or **'PersonalizedOffersSolutionPortrait.pbix'** file under the folder **'Power BI'** and then open it. The portrait one has all of the information in one tab and the landscape one uses two tabs. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
 
   - On the top of the file, click **‘Edit Queries’** button.
 
