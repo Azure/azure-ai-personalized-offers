@@ -1,9 +1,9 @@
-# [Personalized Offers for Retail Solution](placeholder for gallery url)
+# [Personalized Offers](placeholder for gallery url)
 
 This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide).
 
 ### Quick links
-[Starting the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#starting-the-solution) - see how you can monitor the resources that have been deployed to your subscription.
+[Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
 
 [Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
 
@@ -11,7 +11,7 @@ This document is focusing on the post deployment instructions for the automated 
 
 [Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
 
-# Architecture
+## **Architecture**
 The architecture diagram shows various Azure services that are deployed by [Personalized Offers for Retail Solution](palceholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
 
 ![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
@@ -29,82 +29,6 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 </Guide>
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
-
-# Post Deployment Instructions
-Once the solution is deployed to the subscription, you can see the services deployed by clicking the resource group name on the final deployment screen in the CIS.
-
-![CIS resource group link](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/CIS_ResourceGroup.png)
-
-This will show all the resources under this resource group on [Azure management portal](https://portal.azure.com/). This is a good time to pin the resource to your main Azure Portal page to make it easy to return to in any of the following steps. The pin icon can be found at the top right corner of the Resource Group Overview Blade.
-
-## **Starting the solution**
-After successful deployment, there are a few steps you need to take to start your solution and to scale it to a reasonable simulation level:
-
-1. From the deployment page or from the Resource Group Page we will need to start each of the **Stream Analytics Jobs**.
-	
-	a. From the resource group page or from the deployment page click on the link for **StreamProductViewsJob**, this should open it in a new tab or window.
-	
-	b. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
-	
-	c. From the resource group page or from the deployment page click on the link for **StreamOfferViewsJob**, this should open it in a new tab or window.
-	
-	d. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
-	
-	e. From the resource group page or from the deployment page click on the link for **StreamClickCountsJob**, this should open it in a new tab or window.
-	
-	f. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
-	
-	g. From the resource group page or from the deployment page click on the link for **StreamRawDataJob**, this should open it in a new tab or window.
-	
-	h. Click on the ***Outputs*** section of the menu on the left side. In the **Outputs** blade you will see two Outputs: **clickstreamdl** and **offersdl**. For each of these you will need to click on the output. The new blade that opens with the details will have a ***Renew Authorization*** button on it. Click the button and follow the authentication prompts. Once the output is authenticated, click the ***Save*** button and repeat with the second output.
-		
-	i. Click the ***Overview*** section of the menu on the left side.
-	
-	j. Click on the ***Start*** at the top of the over view blade. When prompted select **now** as the time to begin the job. You can now close this tab.
-
-
-2. From the deployment page or from the Resource Group page click on the Functions App. The name will begin with **functions-** and will be of type **App Service**.
-
-	a. Click on the **Function app settings** link on the lower left side of the blade.
-	
-	b. Click on **Go to App Service Editor**. This will open a new window with an editor for coding Azure Functions.
-	
-	c. Find the **hosts.json** file and click on it. Replace the current content with the following:
-
-        {
-			"queues": 
-			{
-				"maxPollingInterval": 700,
-				"batchSize": 2,
-				"maxDequeueCount": 2
-			}
-        }
-	d. Once this is saved (This can be seen at the top right of the editor) you can close this new tab	
-3. On the Azure Functions web page we now need to enable each of the functions that are needed for the application. For the **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**, **UserSimulation**, and **UserSimulationStartup** the following steps need to be taken:
-
-	a. Click on the function from the left navigation.
-	
-	b. Select the **Manage** tab for that Function.
-	
-	c. Set the **Function State** to **Enabled**.
-	
-5. Now we need to run the **RedisProductTrigger** and **UpdateTopUsersCache** Functions:
-
-	a. Click on the function from the left navigation.
-	
-	b. Select the **Develop** tab for that Function.
-	
-	c. Click **Run** at the top of the Function editor.
-	
-	d. You should see something like the following:
-	
-        2017-03-18T11:08:20.867 Function started (Id=efacd569-5c8b-4380-b23d-4a18e7fee5cc)
-        2017-03-18T11:08:21.164 C# Timer trigger function executed at: 3/18/2017 11:08:21 AM
-        2017-03-18T11:08:22.089 Function completed (Success, Id=efacd569-5c8b-4380-b23d-4a18e7fee5cc)
-
-6. The last step is to start the simulation with the **UserSimulationStartup** Function. The steps are the same as the ones in **Step 5** above. The only difference will be this function will take longer to complete.
-
-Now your simulation is running and is active. The information below will help you see how everything is running.
 
 ## **Monitor progress**
 
@@ -170,58 +94,48 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 
   - Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
 
-1. (Optional) Publish the dashboard to [Power BI online](http://www.powerbi.com/).
-    Note that this step needs a Power BI account (or Office 365 account).
-
-      - Click **"Publish"** on the top panel. Choose **'My Workspace'** and few seconds later a window appears displaying "Publishing succeeded".
-
-      - Click the link on the screen to open it in a browser. On the left panel, go to the **Dataset** section, right click the dataset *'EnergyDemandForecastSolution'*, choose **Dataset Settings**. In the pop out window, click **Enter credentials** and enter your database credentials by following the instructions. To find detailed instructions, please see [Publish from Power BI Desktop](https://support.powerbi.com/knowledgebase/articles/461278-publish-from-power-bi-desktop).
-
-      - Now you can see new items showing under 'Reports' and 'Datasets'. To create a new dashboard: click the **'+'** sign next to the
-        **Dashboards** section on the left pane. Enter the name "Energy Demand Forecasting Demo" for this new dashboard.
-
-      - Once you open the report, click   ![Pin](Figures/PowerBI-4.png) to pin all the
-		visualizations to your dashboard. To find detailed instructions, see [Pin a tile to a Power BI dashboard from a report](https://support.powerbi.com/knowledgebase/articles/430323-pin-a-tile-to-a-power-bi-dashboard-from-a-report). Here is an example of the dashboard.
-
-      ![Dashboard Example](Figures/PowerBI-11.png)
-
-### Visualize Solution Activity From Real-time Data Stream
-
-The goal of this part is to visualize the real-time information about our solution. Power BI can connect to a real-time data stream through Azure Stream Analytics.
-
-> Note: A [Power BI online](http://www.powerbi.com/) account is required to perform the following steps. If you don't have an account, you can [create one here](https://powerbi.microsoft.com/pricing).
-
-1. Login on [Power BI online](http://www.powerbi.com)
-
-    -   On the left panel Datasets section in My Workspace, you should be able to see a new dataset showing on the left panel of Power BI. This is the streaming data you pushed from Azure Stream Analytics in the previous step.
-
-    -   Make sure the ***Visualizations*** pane is open and is shown on the
-    right side of the screen.
-
-2. Now you can directly create a visualization on Power BI online. We will use this example to show you how to create the "Demand by Timestamp" tile:
-	-	Click dataset **EnergyForecastStreamData** on the left panel Datasets section.
-
-	-	Click **"Line Chart"** icon.![Line Chart](Figures/PowerBI-3.png)
-
-	-	Click EnergyForecastStreamData in **Fields** panel.
-
-	-	Click **“time”** and make sure it shows under "Axis". Click **“demand”** and make sure it shows under "Values".
-
-	-	Click **'Save'** on the top and name the report as “EnergyStreamDataReport”. The report named “EnergyStreamDataReport” will be shown in Reports section in the Navigator pane on left.
-
-	-	Click **“Pin Visual”**![](Figures/PowerBI-4.png) icon on top right corner of this line chart, a "Pin to Dashboard" window may show up for you to choose a dashboard. Please select "EnergyStreamDataReport", then click "Pin".
-
-
 ## **Customization**
 You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
 
 ## **Scaling**
-Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned.  For some additional ideas on scaling see the links below:
+Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned.  
+
+This solution has the capacity to run at a much higher rate then currently configured and is slowed down with line 62 of the run.csx function in the PersonalizedOfferFunction.
+
+		Thread.Sleep(2000);
+		
+
+This forces each function instance to take a minimum of 2 seconds and overall we end up running at 1 simulation/second with our 2 function instances.  Removing this line will significantly speed up the solution.  There are whole series of issues to consider when scaling up the solution:
+
+1. **AzureML**
+	* Our solution makes a request for every request made by a user to AzureML.
+	* As the number of requests scale up the endpoint needs to be able to handle the number of requests. We currently have 1 endpoint and allow for 200 concurrent requests.
+	* If the volume is going to be very high, maybe the results should be cached of the user affinity to products with a timeout period. Only make the call to AzureML if the cache has timed out. This will reduce the volume of calls to AzureML.
+	
+2. **Azure Functions and Azure App Plan**
+	* The App Plan can be scaled up by increasing type of machine being used or scaled out by increasing the number of instances.
+	* The Azure Functions can be scaled out as well by increasing the number of instances of a function run simultaneously in the hosts.json.
+	* Making sure data sent to Event Hub is sent partitioned by a partition id (this same partition information will be used by Stream Analytics and DocumentDB)
+	
+3. **Azure Event Hub**
+	* Currently set for 16 partitions and a throughput of 20. If the partitions are increased then make sure you can handle this in DocumentDB and Stream Analytics.
+	
+4. **Azure Stream Analytics**
+	* Checking to see that stream jobs that go to partitioned DocumentDB collection make use of queries that are partitioned. The input partitions and output partitions should match up.
+	* Check to see whether using sliding, hopping or tumbling windows is appropriate for your stream jobs. Each has a different effect on your stream job and the streaming throughput requirements for your job to run smoothly.
+	* Check to see the SU% figure to see that the utilization numbers aren't too high, otherwise you may start seeing a lag in data being processed by your stream job.
+	
+5. **Azure DocumentDB**
+	* Partitioned collections require at least 10GB, but at 10GB only 1 physical device exists so all partitions are on the same physical device. This does not offer the best througput possible.
+	* A 250GB capacity will allow for 25 10GB physical partitions. Each capable of holding multiple logical partitions that are distributed to give the best performance.
+	* Increasing a partition size later requires moving your data out, recreating your collection and migrating your data to the new partition.
+
+For some additional ideas on scaling see the links below to learn more:
 
 * **Azure Traffic Manager** - Used to route a user request to the service endpoint nearest to the user. [Documentation Link](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview)
 * **Azure Application Gateway** - Load Balancing your Application. [Documentation Link](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-introduction)
 * **Azure Machine Learning** - Add more endpoints to handle additional load. [Documentation Link](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-scaling-webservice)
-* Make use of **Partitioning** all the way from ingestion in **Azure Event Hub**, processing in **Azure Stream Analytics** and **Azure Functions**, and to storage in **Azure Document DB**.
+* Make use of **Partitioning** all the way from ingestion in **Azure Event Hub**, processing in **Azure Stream Analytics** and **Azure Functions**, and to storage in **Azure DocumentDB**.
 	* Event Hub Partitioning - [Documentation Link 1](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Documentation Link 2](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide#partition-key)
 	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
 	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)

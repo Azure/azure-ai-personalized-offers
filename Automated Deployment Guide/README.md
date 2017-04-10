@@ -1,7 +1,7 @@
 
-# [Personalized Offers for Retail Solution](placeholder for gallery url)
+# [Personalized Offers](placeholder for gallery url)
 
-This folder contains the post-deployment instructions for the deployable Personalized Offers for Retail solution in the Cortana Intelligence Gallery. To start a new solution deployment, visit the gallery page [here](placeholder for gallery url).
+This folder contains the post-deployment instructions for the deployable Personalized Offers solution in the Cortana Intelligence Gallery. To start a new solution deployment, visit the gallery page [here](placeholder for gallery url).
 
 <Guide type="PostDeploymentGuidance" url="https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md"/>
 
@@ -15,6 +15,7 @@ Today’s digital marketing teams can build this intelligence using the data gen
 
 ## Prerequisites
 <Guide type="Prerequisites">
+
 - This pattern requires creation of **1 Data Lake Store**, **4 Stream Jobs with a total of 43 Streaming Units**, **1 Event Hub with 20 Throughput Units, 16 partitions and 3 Consumer Groups** and a **DocumentDB database with 6 collections each provisioned with 10000 RUs, 10GB (3 have 250 GB and are Partitioned)**. Ensure adequate Data Lake Stores and Stream Processing units are available before provisioning. Please consider deleting any unused Data Lake Store from your subscription. You may contact [Azure Support](https://azure.microsoft.com/support/faq/) if you need to increase the limit.
 
 - This pattern requires user to have admin or owner privilege in order to create Service Principal in later steps during solution deployment. Check your account permissions using the document [Required permissions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#required-permissions). 
@@ -42,7 +43,7 @@ The 'Deploy' button will launch a workflow that will deploy an instance of the s
 
 4. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
+5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB**.  The raw data is sent to **Azure Data Lake Storage**. 
 </Guide>
 
 #### Disclaimer
