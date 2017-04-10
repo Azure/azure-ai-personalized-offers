@@ -25,7 +25,7 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 4. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB* and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
+5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
 </Guide>
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
