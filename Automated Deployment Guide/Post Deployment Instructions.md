@@ -75,7 +75,7 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 
   - On the top of the file, click **‘Edit Queries’** button.
 
-  - In the pop out window, you will see 9 Queries on the left hand side and on the right side you will see Query Settings. For each of the following queries: **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**, follow the steps below:
+  - In the pop out window (ignore warning about credentials as you will be entering them shortly), you will see 9 Queries on the left hand side and on the right side you will see Query Settings. For each of the following queries: **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**, follow the steps below:
   
   	- Select the query on the left
   	- Click the **gear** icon to the right of **Source** in the **Applied Steps** section of the **Query Settings** 
@@ -83,7 +83,7 @@ The goal of this part is to get a visual overview of how the Personalized Offers
   	- A prompt should ask you for the Account Key enter the Primary Key from DocumentDB in the **Account key** field (You should only have to do this for the first query)
   	- Repeat these steps for the other queries listed above.
   
-  - For the these **userProductViews** there are some additional steps to take. Each of the **Applied Steps** must be examined to see that the right values are there.
+  - For these **userProductViews** there are some additional steps to take. Each of the **Applied Steps** must be examined to see that the right values are there.
   	- click on the 6th step **Expanded productviews** gear icon.
   	- in this window click the **Load More** link near the bottom.
   	- verify that all products 1-25 are there in the list and select them all (using the **Select All Columns** checkbox at the top).
@@ -98,9 +98,9 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
 
 ## **Scaling**
-Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned.  
+Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned. The following changes and details are not needed to run this solution, but provide a starting point for learning how to scale the solution to handle larger volumes or more global distribution. 
 
-This solution has the capacity to run at a much higher rate then currently configured and is slowed down with line 62 of the run.csx function in the PersonalizedOfferFunction.
+This solution has the capacity to run at a much higher rate than currently configured and is slowed down with line 62 of the run.csx function in the PersonalizedOfferFunction.
 
 		Thread.Sleep(2000);
 		
@@ -111,34 +111,36 @@ This forces each function instance to take a minimum of 2 seconds and overall we
 	* Our solution makes a request for every request made by a user to AzureML.
 	* As the number of requests scale up the endpoint needs to be able to handle the number of requests. We currently have 1 endpoint and allow for 200 concurrent requests.
 	* If the volume is going to be very high, maybe the results should be cached of the user affinity to products with a timeout period. Only make the call to AzureML if the cache has timed out. This will reduce the volume of calls to AzureML.
+	* Adding more endpoints to handle additional load. [Documentation Link](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-scaling-webservice)
 	
 2. **Azure Functions and Azure App Plan**
 	* The App Plan can be scaled up by increasing type of machine being used or scaled out by increasing the number of instances.
 	* The Azure Functions can be scaled out as well by increasing the number of instances of a function run simultaneously in the hosts.json.
 	* Making sure data sent to Event Hub is sent partitioned by a partition id (this same partition information will be used by Stream Analytics and DocumentDB)
+	* Azure Functions scaling via [Service Plan](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) and by editing the [host.json](https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json) file
 	
 3. **Azure Event Hub**
 	* Currently set for 16 partitions and a throughput of 20. If the partitions are increased then make sure you can handle this in DocumentDB and Stream Analytics.
+	* Event Hub Partitioning - [Documentation Link 1](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Documentation Link 2](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide#partition-key)
 	
 4. **Azure Stream Analytics**
 	* Checking to see that stream jobs that go to partitioned DocumentDB collection make use of queries that are partitioned. The input partitions and output partitions should match up.
 	* Check to see whether using sliding, hopping or tumbling windows is appropriate for your stream jobs. Each has a different effect on your stream job and the streaming throughput requirements for your job to run smoothly.
 	* Check to see the SU% figure to see that the utilization numbers aren't too high, otherwise you may start seeing a lag in data being processed by your stream job.
+	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
+	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)
 	
 5. **Azure DocumentDB**
 	* Partitioned collections require at least 10GB, but at 10GB only 1 physical device exists so all partitions are on the same physical device. This does not offer the best througput possible.
 	* A 250GB capacity will allow for 25 10GB physical partitions. Each capable of holding multiple logical partitions that are distributed to give the best performance.
 	* Increasing a partition size later requires moving your data out, recreating your collection and migrating your data to the new partition.
+	* [Partitioning in DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-partition-data)
 
 For some additional ideas on scaling see the links below to learn more:
 
 * **Azure Traffic Manager** - Used to route a user request to the service endpoint nearest to the user. [Documentation Link](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview)
 * **Azure Application Gateway** - Load Balancing your Application. [Documentation Link](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-introduction)
-* **Azure Machine Learning** - Add more endpoints to handle additional load. [Documentation Link](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-scaling-webservice)
-* Make use of **Partitioning** all the way from ingestion in **Azure Event Hub**, processing in **Azure Stream Analytics** and **Azure Functions**, and to storage in **Azure DocumentDB**.
-	* Event Hub Partitioning - [Documentation Link 1](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Documentation Link 2](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide#partition-key)
-	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
-	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)
-	* [Partitioning in DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-partition-data)
-	* Azure Functions scaling via [Service Plan](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) and by editing the [host.json](https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json) file
+
+	
+	
 	
