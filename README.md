@@ -26,7 +26,7 @@ For more information on how to tailor Cortana Intelligence to your needs [connec
 
 ## Technical Audiences
 
-See the [*Manual Deployment Guide*]https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) folder for a full set of instructions on how to put together and deploy a Personalized Offers solution using the Cortana Intelligence Suite. For technical problems or questions about deploying this solution, please post in the issues tab of the repository.
+See the [*Manual Deployment Guide*](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) folder for a full set of instructions on how to put together and deploy a Personalized Offers solution using the Cortana Intelligence Suite. For technical problems or questions about deploying this solution, please post in the issues tab of the repository.
 
 ## Related Resources
 A playbook for approaching personalization problems, which can be considered to include use cases such as that discussed within this solution, is published [here](https://github.com/Azure/cortana-intellligence-personalization-data-science-playbook).
