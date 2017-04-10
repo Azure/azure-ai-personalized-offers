@@ -18,7 +18,6 @@ Today’s digital marketing teams can build this intelligence using the data gen
 
 - This pattern requires creation of **1 Data Lake Store**, **4 Stream Jobs with a total of 43 Streaming Units**, **1 Event Hub with 20 Throughput Units, 16 partitions and 3 Consumer Groups** and a **DocumentDB database with 6 collections each provisioned with 10000 RUs, 10GB (3 have 250 GB and are Partitioned)**. Ensure adequate Data Lake Stores and Stream Processing units are available before provisioning. Please consider deleting any unused Data Lake Store from your subscription. You may contact [Azure Support](https://azure.microsoft.com/support/faq/) if you need to increase the limit.
 
-- This pattern requires user to have admin or owner privilege in order to create Service Principal in later steps during solution deployment. Check your account permissions using the document [Required permissions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal#required-permissions). 
 </Guide>
 
 ## <a name="Description"></a>Description
