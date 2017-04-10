@@ -31,7 +31,7 @@ This solution combines several Azure services to provide powerful advantages. Ev
 The 'Deploy' button will launch a workflow that will deploy an instance of the solution within a Resource Group in the Azure subscription you specify. The solution includes multiple Azure services (described above) and provides at the end a few short instructions necessary to have a working end-to-end solution with simulated user behavior. 
 
 ## Solution Diagram
-![Solution Diagram](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
+![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
 ## Technical details and workflow
 1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**.
