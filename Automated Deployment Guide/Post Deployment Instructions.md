@@ -125,7 +125,7 @@ This forces each function instance to take a minimum of 2 seconds and overall we
 	
 4. **Azure Stream Analytics**
 	* Checking to see that stream jobs that go to partitioned DocumentDB collection make use of queries that are partitioned. The input partitions and output partitions should match up.
-	* Check to see whether using sliding, hopping or tumbling windows is appropriate for your stream jobs. Each has a different effect on your stream job and the streaming throughput requirements for your job to run smoothly.
+	* Check to see whether using [sliding, hopping or tumbling windows](https://msdn.microsoft.com/en-us/library/azure/dn835019.aspx) is appropriate for your stream jobs. Each has a different effect on your stream job and the streaming throughput requirements for your job to run smoothly.
 	* Check to see the SU% figure to see that the utilization numbers aren't too high, otherwise you may start seeing a lag in data being processed by your stream job.
 	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
 	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)
