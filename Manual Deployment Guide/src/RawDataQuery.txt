@@ -1,0 +1,10 @@
+SELECT *
+INTO clickstreamdl
+FROM clickactivitydlcg
+WHERE eventType = 'ClickStream'
+    AND (clickType = 'ProductClick' OR clickType = 'OfferClick')
+
+SELECT *
+INTO offersdl
+FROM clickactivitydlcg
+WHERE eventType = 'OfferData'

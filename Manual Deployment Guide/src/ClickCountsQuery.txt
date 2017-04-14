@@ -1,0 +1,16 @@
+SELECT userId as id, count(*) as totalProductViewsDay
+INTO UserCounts
+FROM clickactivitydbcg TIMESTAMP BY EventEnqueuedUtcTime Partition By PartitionId
+WHERE
+    eventType = 'ClickStream'
+    AND clickType = 'ProductClick'
+GROUP BY userId, PartitionId, SlidingWindow(day, 1)
+
+ 
+SELECT clickedItemId as id, count(*) as totalClicks
+INTO ProductCounts
+FROM clickactivitydbcg TIMESTAMP BY EventEnqueuedUtcTime
+WHERE
+    eventType = 'ClickStream'
+    AND clickType = 'ProductClick'
+GROUP BY clickedItemId, HoppingWindow(Duration(day, 1), Hop(minute, 1))

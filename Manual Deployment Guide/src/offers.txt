@@ -1,0 +1,7 @@
+
+{"dateStart": "1999/04/01", "offerProducts": [], "functionName": "topUsersFun", "dateEnd": "2018/04/01", "offerName": "10% off for top 1000 users in the past day", "functionParameters": ["5"], "id": "1", "condition": "topUsers"}
+{"dateStart": "1999/04/01", "offerProducts": [], "functionName": "distanceFun", "dateEnd": "2018/04/01", "offerName": "Free shipping for online orders if home address is 100 miles away from store or more", "functionParameters": ["100"], "id": "2", "condition": "distance"}
+{"dateStart": "2016/12/12", "offerProducts": ["11", "12", "13", "14", "15"], "functionName": "dateFun", "dateEnd": "2017/01/07", "offerName": "New Year resolution \u2013 buy 1 get 1 free on fitness shoes", "functionParameters": ["2016/12/14", "2017/01/07"], "id": "3", "condition": "date"}
+{"dateStart": "1999/04/01", "offerProducts": ["11", "12", "13", "14", "15"], "functionName": "specificProductsFitnessFun", "dateEnd": "2018/04/01", "offerName": "10% off in fitness", "functionParameters": [], "id": "4", "condition": "specificProducts"}
+{"dateStart": "1999/04/01", "offerProducts": ["21", "22", "23", "24", "25"], "functionName": "specificProductsBeautyFun", "dateEnd": "2018/04/01", "offerName": "10% off in beauty", "functionParameters": [], "id": "5", "condition": "specificProducts"}
+{"dateStart": "1999/04/01", "offerProducts": ["3"], "functionName": "specificProductsZoomLensFun", "dateEnd": "2018/04/01", "offerName": "30% Off on Zoom Lens DSLR 18-55mm", "functionParameters": [], "id": "6", "condition": "specificProducts"}

@@ -1,0 +1,26 @@
+
+{"weight": 200, "productName": "DSLR Camera", "totalclicks": 0, "cost": 1000, "id": "1", "categories": {"Apparel": 0, "Photography": 1, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 80, "productName": "Compact Camera", "totalclicks": 0, "cost": 400, "id": "2", "categories": {"Apparel": 0, "Photography": 1, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 150, "productName": "Zoom Lens DSLR 18-55mm", "totalclicks": 0, "cost": 350, "id": "3", "categories": {"Apparel": 0, "Photography": 1, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 1, "productName": "Memory Card 64 GB", "totalclicks": 0, "cost": 40, "id": "4", "categories": {"Apparel": 0, "Photography": 1, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 10, "productName": "DSLR Lens Filter 77mm", "totalclicks": 0, "cost": 50, "id": "5", "categories": {"Apparel": 0, "Photography": 1, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 1800, "productName": "Ultraportable Laptop", "totalclicks": 0, "cost": 900, "id": "6", "categories": {"Apparel": 0, "Photography": 0, "Computers": 1, "Beauty": 0, "Fitness": 0}}
+{"weight": 1000, "productName": "Tablet", "totalclicks": 0, "cost": 400, "id": "7", "categories": {"Apparel": 0, "Photography": 0, "Computers": 1, "Beauty": 0, "Fitness": 0}}
+{"weight": 10000, "productName": "Desktop Computer", "totalclicks": 0, "cost": 650, "id": "8", "categories": {"Apparel": 0, "Photography": 0, "Computers": 1, "Beauty": 0, "Fitness": 0}}
+{"weight": 12000, "productName": "Gaming Desktop", "totalclicks": 0, "cost": 2500, "id": "9", "categories": {"Apparel": 0, "Photography": 0, "Computers": 1, "Beauty": 0, "Fitness": 0}}
+{"weight": 8000, "productName": "All-in-one computer", "totalclicks": 0, "cost": 1450, "id": "10", "categories": {"Apparel": 0, "Photography": 0, "Computers": 1, "Beauty": 0, "Fitness": 0}}
+{"weight": 20, "productName": "Fitness watch", "totalclicks": 0, "cost": 120, "id": "11", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 1}}
+{"weight": 25000, "productName": "Treadmill", "totalclicks": 0, "cost": 1100, "id": "12", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 1}}
+{"weight": 100, "productName": "Women's Running Shoes", "totalclicks": 0, "cost": 125, "id": "13", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 1}}
+{"weight": 100, "productName": "Men's Running Shoes", "totalclicks": 0, "cost": 125, "id": "14", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 1}}
+{"weight": 300, "productName": "Exercise Ball Medium", "totalclicks": 0, "cost": 40, "id": "15", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 1}}
+{"weight": 45, "productName": "Women's high heel evening sandals", "totalclicks": 0, "cost": 75, "id": "16", "categories": {"Apparel": 1, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 1250, "productName": "Women's wool coat", "totalclicks": 0, "cost": 800, "id": "17", "categories": {"Apparel": 1, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 250, "productName": "Women's evening dress", "totalclicks": 0, "cost": 140, "id": "18", "categories": {"Apparel": 1, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 20, "productName": "Women's hoodie", "totalclicks": 0, "cost": 40, "id": "19", "categories": {"Apparel": 1, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 120, "productName": "Women's cashmere sweater", "totalclicks": 0, "cost": 350, "id": "20", "categories": {"Apparel": 1, "Photography": 0, "Computers": 0, "Beauty": 0, "Fitness": 0}}
+{"weight": 200, "productName": "Moisturizer SPF 15+", "totalclicks": 0, "cost": 15, "id": "21", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 1, "Fitness": 0}}
+{"weight": 100, "productName": "Serum", "totalclicks": 0, "cost": 80, "id": "22", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 1, "Fitness": 0}}
+{"weight": 120, "productName": "Sunscreen cream", "totalclicks": 0, "cost": 20, "id": "23", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 1, "Fitness": 0}}
+{"weight": 30, "productName": "Foundation brush", "totalclicks": 0, "cost": 7, "id": "24", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 1, "Fitness": 0}}
+{"weight": 40, "productName": "Foundation", "totalclicks": 0, "cost": 14, "id": "25", "categories": {"Apparel": 0, "Photography": 0, "Computers": 0, "Beauty": 1, "Fitness": 0}}

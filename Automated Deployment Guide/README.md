@@ -17,7 +17,14 @@ Today’s digital marketing teams can build this intelligence using the data gen
 ## Prerequisites
 <Guide type="Prerequisites">
 
-- This pattern requires creation of **1 Data Lake Store**, **4 Stream Jobs with a total of 43 Streaming Units**, **1 Event Hub with 20 Throughput Units, 16 partitions and 3 Consumer Groups** and a **DocumentDB database with 6 collections each provisioned with 10000 RUs, 10GB (3 have 250 GB and are Partitioned)**. Ensure adequate Data Lake Stores and Stream Processing units are available before provisioning. Please consider deleting any unused Data Lake Store from your subscription. You may contact [Azure Support](https://azure.microsoft.com/support/faq/) if you need to increase the limit.
+This solution requires the creation of:
+
+* 1 Data Lake Store
+* 4 Stream Jobs with a total of 43 Streaming Units
+* 1 Event Hub with 20 Throughput Units, 16 partitions and 4 Consumer Groups
+* 1 DocumentDB database with 6 collections each provisioned with 10000 RUs, 10GB (3 are Partitioned). 
+	
+Ensure adequate Data Lake Stores and Stream Processing units are available before provisioning. Please consider deleting any unused Data Lake Store from your subscription. You may contact Azure Support if you need to increase the limit.
 
 </Guide>
 

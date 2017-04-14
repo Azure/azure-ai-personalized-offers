@@ -1,0 +1,16 @@
+function main(dqproductid, dqday, dqdayupdatetm, hqhour, hqhourupdatetm, mqminute, mqminuteupdatetm) {
+
+    var productViewsObj = {
+        day: dqday,
+        dayUpdated: dqdayupdatetm,
+        hour: hqhour,
+        hourUpdated: hqhourupdatetm,
+        minute: mqminute,
+        minuteUpdated: mqminuteupdatetm
+    }
+
+    var productviews = {  }
+    productviews[dqproductid] = productViewsObj
+
+    return productviews
+}

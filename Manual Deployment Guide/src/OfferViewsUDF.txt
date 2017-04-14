@@ -1,0 +1,20 @@
+function main(oqofferid, ocqclickedinlastday, oqofferedinlastday) {
+
+    var offerViewsObj = { }
+
+    if (ocqclickedinlastday) {
+        offerViewsObj = {
+            clickedinlastday: ocqclickedinlastday,
+            offeredinlastday: oqofferedinlastday
+        }        
+    } else {
+        offerViewsObj = {
+            offeredinlastday: oqofferedinlastday
+        }
+    }
+
+    var offerviews = {  }
+    offerviews[oqofferid] = offerViewsObj
+
+    return offerviews
+}

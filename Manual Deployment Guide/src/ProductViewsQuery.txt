@@ -1,0 +1,38 @@
+WITH DayQuery AS (
+    SELECT userId, clickedItemId as productId, PartitionId, CONCAT(userId,'-',clickedItemId) as id, System.Timestamp AS dayLastUpdated, COUNT(*) as day
+    FROM ClickActivity Partition By PartitionId
+    WHERE
+        eventType = 'ClickStream' 
+        AND clickType = 'ProductClick'
+    GROUP BY userId, clickedItemId, PartitionId, HoppingWindow(Duration(day, 1), Hop(second, 30)) 
+),
+HourQuery AS (
+SELECT CONCAT(userId,'-',clickedItemId) as id, PartitionId, System.Timestamp AS hourLastUpdated, COUNT(*) as hour
+FROM ClickActivity Partition By PartitionId
+    WHERE
+        eventType = 'ClickStream'
+        AND clickType = 'ProductClick'
+GROUP BY userId, clickedItemId, PartitionId, HoppingWindow(Duration(hour, 1), Hop(second, 30)) 
+),
+MinuteQuery AS (
+SELECT CONCAT(userId,'-',clickedItemId) as id, PartitionId, System.Timestamp AS minuteLastUpdated, COUNT(*) as minute
+FROM ClickActivity Partition By PartitionId
+    WHERE
+        eventType = 'ClickStream'
+        AND clickType = 'ProductClick'
+GROUP BY userId, clickedItemId, PartitionId, HoppingWindow(Duration(minute, 1), Hop(second, 30)) 
+)
+
+-- Queries update the ProductViews collection for a particular users views of products
+SELECT System.Timestamp as updated, DQ.userId as id, udf.productViewsJson(DQ.productId, DQ.day, DQ.dayLastUpdated, HQ.hour, HQ.hourLastUpdated, MQ.minute, MQ.minuteLastUpdated) as productViews
+INTO ProductViews
+FROM 
+    DayQuery DQ Partition By PartitionId
+    JOIN HourQuery HQ Partition By PartitionId
+    ON DQ.id=HQ.id
+    AND DQ.PartitionId =  HQ.PartitionId
+    AND DATEDIFF(second,DQ,HQ) BETWEEN 0 AND 15
+    JOIN MinuteQuery MQ Partition By PartitionId
+    ON DQ.id = MQ.id 
+    AND DQ.PartitionId = MQ.PartitionId
+    AND DATEDIFF(second,DQ,MQ) BETWEEN 0 AND 15

@@ -1,0 +1,25 @@
+WITH OfferClickQuery AS (
+SELECT userId as id, clickedItemId as offerid, PartitionId, System.Timestamp AS currentTime, COUNT(*) as clickedinlastday
+FROM clickactivitydbcg TIMESTAMP BY EventEnqueuedUtcTime Partition By PartitionId
+    WHERE
+        eventType = 'ClickStream'
+        AND clickType = 'OfferClick' 
+GROUP BY userId, clickedItemId, PartitionId, SlidingWindow(day, 1) 
+),
+OfferQuery AS (
+SELECT userId as id, offerId as offerid, PartitionId, System.Timestamp AS currentTime, COUNT(*) as offeredinlastday
+FROM clickactivitydbcg TIMESTAMP BY EventEnqueuedUtcTime Partition By PartitionId
+    WHERE
+        eventType = 'OfferData'
+GROUP BY userId, offerId, PartitionId, SlidingWindow(day, 1) 
+)
+
+SELECT System.Timestamp as updated, OQ.id as id, udf.offerViewsJson(OQ.offerid, OCQ.clickedinlastday, OQ.offeredinlastday) as offerviews
+INTO OfferViews
+FROM 
+    OfferQuery OQ Partition By PartitionId
+    left outer JOIN OfferClickQuery OCQ Partition By PartitionId
+    ON OQ.id=OCQ.id
+    AND OCQ.PartitionId = OQ.PartitionId
+    AND OQ.offerid=OCQ.offerid
+    AND DATEDIFF(minute, OQ,OCQ) BETWEEN 0 AND 90

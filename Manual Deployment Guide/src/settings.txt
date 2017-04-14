@@ -1,0 +1,56 @@
+Use this file to keep track of the following variables. These will be needed for the Azure Functions to work properly. 
+Some of the values have already been filled in with defaults we will be using.
+
+
+storageAccountName	
+storageAccountKey	
+storageAccountConnectionString	
+
+userFile	
+offerFile 	
+productFile	
+referenceCollectionFile1	
+referenceCollectionFile2	
+redisCacheSeedFile	
+
+
+mlPublishedExperimentEndpoint
+mlPublishedExperimentKey 
+
+serviceBusNamespace
+eventHubName	personalizedofferseh
+eventHubConnectionString	
+eventHubSharedAccessPolicyKeyName	RootManageSharedAccessKey
+eventHubSharedAccessPolicyKey
+eventHubGroup1	clickactivityaggcg
+eventHubGroup2	clickactivitydbcg
+eventHubGroup3	clickactivitydlcg
+
+
+docDbConnectionString 
+docDbUri
+docDbKey
+
+docDbDatabase	personalizedOffers
+docDbUserCollection	userCollection
+docDbUserPartition	/id
+docDbOfferCollection	offerCollection
+docDbOfferPartition	/id
+docDbProductCollection	productCollection
+docDbProductPartition	/id
+docDbReferenceCollection	referenceCollection
+docDbReferencePartition	/id	
+docDbProductViewsCollection	productViewsCollection
+docDbProductViewsPartition	/id
+docDbOfferViewsCollection	offerViewsCollection
+docDbOfferViewsPartition	/id
+
+adlStoreAccount
+
+redisCacheName	
+redisCacheKey
+
+
+
+
+

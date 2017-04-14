@@ -1,0 +1,1 @@
+{"E": 0.8, "id": "offerThreshold", "N": 3}

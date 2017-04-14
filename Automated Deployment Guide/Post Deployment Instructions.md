@@ -1,18 +1,23 @@
 # [Personalized Offers](placeholder for gallery url)
 
-This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide).
+This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
 
 ### Quick links
-[Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
+[Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
 
-[Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
+[Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
 
-[Visualization Steps](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) - instructions to connect up a Power BI dashboard to your deployment that visualized the results.
+[Visualization Steps](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) - instructions to connect up a Power BI dashboard to your deployment that visualized the results.
 
-[Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
+[Customization](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#customization) - guidance on how to customize the offer logic and retrain the model.
 
+[Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
+
+[Stopping the Solution](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#stopping) - How to stop or delete the solution.
+
+<a name="architecture"></a>
 ## **Architecture**
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers for Retail Solution](palceholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](placeholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
 
 ![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
@@ -30,6 +35,7 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
 
+<a name="monitor-progress"></a>
 ## **Monitor progress**
 
 For each of the services in this solution going to from the resource group page to the service will provide you with some information on how the service is running. Often there is a Metrics blade listed on the left side of that service that will provide more information. For each of the services below a link is provided that explains monitoring each of the services in more detail. 
@@ -56,7 +62,7 @@ For more information on how to monitor Azure Redis Cache take a look at the docu
 ## **Visualization**
 Power BI dashboard can be used to visualize the real-time energy consumption data as well as the updated energy forecast results. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
-
+<a name="visualization"></a>
 ### Visualize Personalized Offer Data from Azure DocumentDB
 
 The goal of this part is to get a visual overview of how the Personalized Offers for Retail Solution is running. Power BI can directly connect to an Azure DocumentDB as its data source, where the solution results are stored.
@@ -94,9 +100,13 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 
   - Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
 
+<a name="customization"></a>
 ## **Customization**
-You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
+You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
 
+See the [Offer Logic Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/RetrainingModel.md) to show how to retrain your model.
+
+<a name="scaling"></a>
 ## **Scaling**
 Many of the services used in this solution were selected because they scale up/out, are available in many regions, and have multiple ways they can be further tuned. The following changes and details are not needed to run this solution, but provide a starting point for learning how to scale the solution to handle larger volumes or more global distribution. 
 
@@ -140,6 +150,22 @@ For some additional ideas on scaling see the links below to learn more:
 
 * **Azure Traffic Manager** - Used to route a user request to the service endpoint nearest to the user. [Documentation Link](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview)
 * **Azure Application Gateway** - Load Balancing your Application. [Documentation Link](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-introduction)
+
+<a name="stopping"></a>
+## **Stopping the Solution**
+
+The easiest way to pause the solution is to stop generating events:
+
+1. Go to your **resource group** created for this solution
+2. Go to the **App Service** associated with this resource
+3. Click on the **PersonalizedOfferFunction**
+4. Click on the **Manage** link below the Function name on the left
+5. Set the *Funtion State* at the top to **Disabled**
+6. This will stop generating data which will reduce the consumption of resources in the subscription
+
+To entirely remove the solution
+
+1. Go to your **resource group** created for this solution
 
 	
 	
