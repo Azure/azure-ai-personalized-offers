@@ -11,22 +11,22 @@ The snapshot below shows an example PowerBI dashboard that gives insights into t
 ![Solution Diagram Picture](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Figures/PersonalizedOffersArchitecture.png)
 
 ## What's Under the Hood
-The Cortana Intelligence Suite provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building an demand forecasting for energy solution. 
+Cortana Intelligence provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building an demand forecasting for energy solution. 
 This solution combines several Azure services to provide powerful advantages. Event Hubs collects real-time consumption data. Stream Analytics aggregates the streaming data and updates the data used in making personalized offers to the customer. Azure DocumentDB stores the customer, product and offer information. Azure Storage is used to manage the queues that simulate user interaction. Azure Functions are used as a coordinator for the user simulation and as the central portion of the solution for generating personalized offers. Azure Machine Learning implements and executes the product recommendations and when no user history is available Azure Redis Cache is used to provide pre-computed product recommendations for the customer. PowerBI visualizes the activity of the system with the data from DocumentDB.
 
 ## Getting Started
 
-This solution package contains materials to help both technical and business audiences understand our Personalized Offers solution for Retail built on the [Cortana Intelligence Suite](https://www.microsoft.com/en-us/server-cloud/cortana-intelligence-suite/Overview.aspx).
+This solution package contains materials to help both technical and business audiences understand our Personalized Offers solution for Retail built on [Cortana Intelligence](https://www.microsoft.com/en-us/server-cloud/cortana-intelligence-suite/Overview.aspx).
 
 ## Business Audiences
 
-In this repository you will find a folder labeled [*Solution Overview for Business Audiences*](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Solution%20Overview%20for%20Business%20Audiences) which contains a  presentation covering this solution and benefits of using the Cortana Intelligence Suite
+In this repository you will find a folder labeled [*Solution Overview for Business Audiences*](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Solution%20Overview%20for%20Business%20Audiences) which contains a  presentation covering this solution and benefits of using Cortana Intelligence.
 
 For more information on how to tailor Cortana Intelligence to your needs [connect with one of our partners](http://aka.ms/CISFindPartner).
 
 ## Technical Audiences
 
-See the [*Manual Deployment Guide*](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) folder for a full set of instructions on how to put together and deploy a Personalized Offers solution using the Cortana Intelligence Suite. For technical problems or questions about deploying this solution, please post in the issues tab of the repository.
+See the [*Manual Deployment Guide*](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/tree/master/Manual%20Deployment%20Guide) folder for a full set of instructions on how to put together and deploy a Personalized Offers solution using Cortana Intelligence. For technical problems or questions about deploying this solution, please post in the issues tab of the repository.
 
 ## Related Resources
 A playbook for approaching personalization problems, which can be considered to include use cases such as that discussed within this solution, is published [here](https://github.com/Azure/cortana-intellligence-personalization-data-science-playbook).
