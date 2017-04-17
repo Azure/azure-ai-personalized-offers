@@ -32,7 +32,7 @@ Ensure adequate Data Lake Stores and Stream Processing units are available befor
 
 #### Estimated Provisioning Time: <Guide type="EstimatedTime">45 Minutes</Guide>
 <Guide type="Description">
-The Cortana Intelligence Suite provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building a personalized offer solution.
+Cortana Intelligence provides advanced analytics tools through Microsoft Azure — data ingestion, data storage, data processing and advanced analytics components — all of the essential elements for building a personalized offer solution.
 
 This solution combines several Azure services to provide powerful advantages. Event Hubs collects real-time consumption data. Stream Analytics aggregates the streaming data and makes it available for visualization, as well as updating the data used in making personalized offers to the customer. Azure DocumentDB stores the customer, product and offer information. Azure Storage is used to manage the queues that simulate user interaction. Azure Functions are used as a coordinator for the user simulation and as the central portion of the solution for generating personalized offers. Azure Machine Learning implements and executes the user to product affinity scoring and when no user history is available Azure Redis Cache is used to provide pre-computed product affinities for the customer. PowerBI visualizes the real-time activity for the system and with the data from DocumentDB the behavior of the various offers.
 
