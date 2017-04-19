@@ -1,6 +1,6 @@
-# [Personalized Offers](placeholder for gallery url)
+# [Personalized Offers](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4)
 
-This document is focusing on the post deployment instructions for the automated deployment through [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions). The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
+This document is focusing on the post deployment instructions for the [automated deployment](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4) through the Cortana Intelligence Gallery. The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
 
 ### Quick links
 [Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
@@ -77,6 +77,7 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 	
   - Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
 
+
   -	In this GitHub repository, you can download either **'PersonalizedOffersSolutionLandscape.pbix'** or **'PersonalizedOffersSolutionPortrait.pbix'** file under the folder **'Power BI'** and then open it. The portrait one has all of the information in one tab and the landscape one uses two tabs. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
 
   - On the top of the file, click **‘Edit Queries’** button.
@@ -105,6 +106,9 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
 
 See the [Offer Logic Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/RetrainingModel.md) to show how to retrain your model.
+
+For more help, you can [connect with one of our partners](https://appsource.microsoft.com/en-us/product/cortana-intelligence/microsoft-cortana-intelligence.personalized-offers-for-online-retail-preview?flightCodes=personalized-offers-hidekey) for information on how to tailor Cortana Intelligence to your needs.
+
 
 <a name="scaling"></a>
 ## **Scaling**
