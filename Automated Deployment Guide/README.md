@@ -1,7 +1,7 @@
 
-# [Personalized Offers](placeholder for gallery url)
+# [Personalized Offers](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4)
 
-This folder contains the post-deployment instructions for the deployable Personalized Offers solution in the Cortana Intelligence Gallery. To start a new solution deployment, visit the gallery page [here](placeholder for gallery url).
+This folder contains the post-deployment instructions for the deployable Personalized Offers solution in the Cortana Intelligence Gallery. To start a new solution deployment, visit the gallery page [here](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4).
 
 <Guide type="PostDeploymentGuidance" url="https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md"/>
 
