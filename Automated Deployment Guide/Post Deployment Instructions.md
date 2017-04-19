@@ -107,7 +107,7 @@ You can reuse the source code in the [Manual Deployment Guide](https://github.co
 
 See the [Offer Logic Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/RetrainingModel.md) to show how to retrain your model.
 
-For more help, you can [connect with one of our partners](https://appsource.microsoft.com/en-us/product/cortana-intelligence/microsoft-cortana-intelligence.personalized-offers-for-online-retail-preview?flightCodes=personalized-offers-hidekey) for information on how to tailor Cortana Intelligence to your needs.
+For more help, you can [connect with one of our partners](https://appsource.microsoft.com/en-us/product/cortana-intelligence/microsoft-cortana-intelligence.personalized-offers-for-online-retail?tab=Partners) for information on how to tailor Cortana Intelligence to your needs.
 
 
 <a name="scaling"></a>
