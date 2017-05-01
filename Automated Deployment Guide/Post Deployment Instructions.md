@@ -60,7 +60,7 @@ You can view the machine learning experiment by navigating to your Machine Learn
 For more information on how to monitor Azure Redis Cache take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/redis-cache/cache-how-to-monitor).
 
 ## **Visualization**
-Power BI dashboard can be used to visualize the real-time energy consumption data as well as the updated energy forecast results. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
+Power BI dashboard can be used to visualize the real-time personalized offer data as it is being generated. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
 <a name="visualization"></a>
 ### Visualize Personalized Offer Data from Azure DocumentDB
