@@ -164,12 +164,13 @@ The easiest way to pause the solution is to stop generating events:
 2. Go to the **App Service** associated with this resource
 3. Click on the **PersonalizedOfferFunction**
 4. Click on the **Manage** link below the Function name on the left
-5. Set the *Funtion State* at the top to **Disabled**
+5. Set the *Function State* at the top to **Disabled**
 6. This will stop generating data which will reduce the consumption of resources in the subscription
 
 To entirely remove the solution
 
 1. Go to your **resource group** created for this solution
+2. Click **Delete** at the top of the screen.
 
 	
 	
