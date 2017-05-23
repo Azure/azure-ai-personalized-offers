@@ -17,7 +17,7 @@ This document is focusing on the post deployment instructions for the [automated
 
 <a name="architecture"></a>
 ## **Architecture**
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](placeholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://gallery.cortanaintelligence.com/Solution/Personalized-Offers-2) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
 
 ![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
