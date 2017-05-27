@@ -350,19 +350,29 @@ The model used in this Guide is based on the [Personalized Offers Solution How T
 	1. In the new window that opens select **Debug Console -> CMD**
  	2. Click on the **site** folder in the top half of the window
  	3. Click on the **wwwroot** folder
+	
  		a. Find the folder on your machine where you downloaded the contents of the **src** folder from GitHub
+		
  		b. Find the functions.zip file
+		
  		c. Drag this file from your machine to the web page to the area below where it shows the **Size** column. It should highlight and say: **Drag here to upload and unzip**
+		
 		d. This should create the following folders: PersonalizedOfferFunction, PersonalizedOffersUtils, RedisProductTrigger, SeedDocumentDb, SeedRedisCache, UpdateTopUsersCache, UserSimulation, and UserSimulationStartup
+		
 	4. Close the tab opened by the App Service Editor and return to the Azure Functions Screen.
 
 ### Populate DocumentDB and Redis Cache
 1. From the main Azure Functions page:
 	1. Select **SeedDocumentDb**
+	
 		a. Click **Run** at the top of the page
+		
 		b. Wait for the function to complete (Click **Logs** at the bottom to see the function executing)
+		
 	2. Select **SeedRedisCache**
+	
 		a. Click **Run** at the top of the page
+		
 		b. Wait for the function to complete (Click **Logs** at the bottom to see the function executing) 
 
 <a name="asa"></a>
