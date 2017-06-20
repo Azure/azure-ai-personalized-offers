@@ -39,7 +39,7 @@ Ensure adequate Data Lake Stores and Stream Processing units are available befor
 
 ## Architecture
 
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](placeholder link) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
 
 ![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
@@ -49,7 +49,7 @@ The following are the steps to deploy the end-to-end solution.
 
 ### Accessing Files in the Git Repository
 
-This tutorial will refer to files available in the Technical Deployment Guide section of the [Cortana Intelligence Churn Prediction git repository](https://github.com/Azure/cortana-intelligence-personalized-offers/). You can download all of these files at once by clicking the "Clone or download" button on the repository.
+This tutorial will refer to files available in the Technical Deployment Guide section of the [Cortana Intelligence Personalized Offers git repository](https://github.com/Azure/cortana-intelligence-personalized-offers/). You can download all of these files at once by clicking the "Clone or download" button on the repository.
 
 You can download or view individual files by navigating through the repository folders. If you choose this option, be sure to download the "raw" version of each file by clicking the filename to view it, then clicking Download. You will also find a settings.txt file in the ***src*** folder that can be used to keep track of settings you will need for configuring the Azure Functions. The names provided in the settings.txt file are the ones that will be used as the name of the setting and the entries you add will be the value for each setting.
 
