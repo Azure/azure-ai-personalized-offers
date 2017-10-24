@@ -24,13 +24,13 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**, these would not be part of a production solution.
 
-2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure DocumentDb**, product popularity probability is returned by **Azure Machine Learning** (if no history for the user exists then cold start values for product popularity are read in from **Azure Redis Cache**). 
+2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure Cosmos DB**, product popularity probability is returned by **Azure Machine Learning** (if no history for the user exists then cold start values for product popularity are read in from **Azure Redis Cache**). 
 
 3. Raw user activity data (Product and Offer Clicks), Offers made to users, and performance data (for **Azure Functions** and **Azure Machine Learning**) are sent to **Azure Event Hub**.
 
 4. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure DocumentDB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
+5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure Cosmos DB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
 </Guide>
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
@@ -43,12 +43,12 @@ For each of the services in this solution going to from the resource group page 
 #### Azure App Service ####
 For more information on how to monitor Azure App Service you can take a look [here](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-monitor).
 
-#### Azure DocumentDB ####
-For more information on how to monitor DocumentDB take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-monitor-accounts).
+#### Azure Cosmos DB ####
+For more information on how to monitor Cosmos DB take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-monitor-accounts).
 
 #### Azure Functions ####
 
-For more information on how to monitor Azure Functions take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-monitoring).
+For more information on how to monitor Azure Functions take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-accounts).
 
 #### Azure Machine Learning Web Service
 
@@ -63,15 +63,15 @@ For more information on how to monitor Azure Redis Cache take a look at the docu
 Power BI dashboard can be used to visualize the real-time personalized offer data as it is being generated. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
 <a name="visualization"></a>
-### Visualize Personalized Offer Data from Azure DocumentDB
+### Visualize Personalized Offer Data from Azure Cosmos DB
 
-The goal of this part is to get a visual overview of how the Personalized Offers for Retail Solution is running. Power BI can directly connect to an Azure DocumentDB as its data source, where the solution results are stored.
+The goal of this part is to get a visual overview of how the Personalized Offers for Retail Solution is running. Power BI can directly connect to an Azure Cosmos DB as its data source, where the solution results are stored.
 
 > Note:  1) In this step, the prerequisite is to download and install the free software [Power BI desktop](https://powerbi.microsoft.com/desktop). 2) We recommend you start this process 2-3 hours after you deploy the solution so that you have more data points to visualize.
 
 1.  Get the database credentials.
 
-    You can find your DocumentDB URI and Primary Key. Go to the Document DB page for your solution by going to the Resource page for your solution and selecting the Document DB Service. On the left side of the page there is a **Keys** section where this information can be found.
+    You can find your Cosmos DB URI and Primary Key. Go to the Cosmos DB page for your solution by going to the Resource page for your solution and selecting the Cosmos DB Service. On the left side of the page there is a **Keys** section where this information can be found.
     
 2.	Update the data source of the Power BI file
 	
@@ -86,8 +86,8 @@ The goal of this part is to get a visual overview of how the Personalized Offers
   
   	- Select the query on the left
   	- Click the **gear** icon to the right of **Source** in the **Applied Steps** section of the **Query Settings** 
-  	- Put in the URI that you got from DocumentDB into the **URL** field and click **OK**
-  	- A prompt should ask you for the Account Key enter the Primary Key from DocumentDB in the **Account key** field (You should only have to do this for the first query)
+  	- Put in the URI that you got from Cosmos DB into the **URL** field and click **OK**
+  	- A prompt should ask you for the Account Key enter the Primary Key from Cosmos DB in the **Account key** field (You should only have to do this for the first query)
   	- Repeat these steps for the other queries listed above.
   
   - For these **userProductViews** there are some additional steps to take. Each of the **Applied Steps** must be examined to see that the right values are there.
@@ -130,25 +130,25 @@ This forces each function instance to take a minimum of 2 seconds and overall we
 2. **Azure Functions and Azure App Plan**
 	* The App Plan can be scaled up by increasing type of machine being used or scaled out by increasing the number of instances.
 	* The Azure Functions can be scaled out as well by increasing the number of instances of a function run simultaneously in the hosts.json.
-	* Making sure data sent to Event Hub is sent partitioned by a partition id (this same partition information will be used by Stream Analytics and DocumentDB)
+	* Making sure data sent to Event Hub is sent partitioned by a partition id (this same partition information will be used by Stream Analytics and Cosmos DB)
 	* Azure Functions scaling via [Service Plan](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) and by editing the [host.json](https://github.com/Azure/azure-webjobs-sdk-script/wiki/host.json) file
 	
 3. **Azure Event Hub**
-	* Currently set for 16 partitions and a throughput of 20. If the partitions are increased then make sure you can handle this in DocumentDB and Stream Analytics.
+	* Currently set for 16 partitions and a throughput of 20. If the partitions are increased then make sure you can handle this in Cosmos DB and Stream Analytics.
 	* Event Hub Partitioning - [Documentation Link 1](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Documentation Link 2](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide#partition-key)
 	
 4. **Azure Stream Analytics**
-	* Checking to see that stream jobs that go to partitioned DocumentDB collection make use of queries that are partitioned. The input partitions and output partitions should match up.
+	* Checking to see that stream jobs that go to partitioned Cosmos DB collection make use of queries that are partitioned. The input partitions and output partitions should match up.
 	* Check to see whether using [sliding, hopping or tumbling windows](https://msdn.microsoft.com/en-us/library/azure/dn835019.aspx) is appropriate for your stream jobs. Each has a different effect on your stream job and the streaming throughput requirements for your job to run smoothly.
 	* Check to see the SU% figure to see that the utilization numbers aren't too high, otherwise you may start seeing a lag in data being processed by your stream job.
 	* [Scaling by partitioning queries in Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs)
 	* [Partitioning output from Stream Analytics](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-documentdb-output)
 	
-5. **Azure DocumentDB**
+5. **Azure Cosmos DB**
 	* Partitioned collections require at least 10GB, but at 10GB only 1 physical device exists so all partitions are on the same physical device. This does not offer the best througput possible.
 	* A 250GB capacity will allow for 25 10GB physical partitions. Each capable of holding multiple logical partitions that are distributed to give the best performance.
 	* Increasing a partition size later requires moving your data out, recreating your collection and migrating your data to the new partition.
-	* [Partitioning in DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-partition-data)
+	* [Partitioning in Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data)
 
 For some additional ideas on scaling see the links below to learn more:
 
