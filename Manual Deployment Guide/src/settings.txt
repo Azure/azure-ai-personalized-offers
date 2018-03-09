@@ -1,6 +1,11 @@
 Use this file to keep track of the following variables. These will be needed for the Azure Functions to work properly. 
-Some of the values have already been filled in with defaults we will be using.
+Some of the values have already been filled in with the defaults we will be using.
 
+
+unique	
+
+resourceGroupName	
+region	
 
 storageAccountName	
 storageAccountKey	
@@ -13,7 +18,6 @@ referenceCollectionFile1
 referenceCollectionFile2	
 redisCacheSeedFile	
 
-
 mlPublishedExperimentEndpoint
 mlPublishedExperimentKey 
 
@@ -25,7 +29,6 @@ eventHubSharedAccessPolicyKey
 eventHubGroup1	clickactivityaggcg
 eventHubGroup2	clickactivitydbcg
 eventHubGroup3	clickactivitydlcg
-
 
 docDbConnectionString 
 docDbUri
@@ -49,8 +52,3 @@ adlStoreAccount
 
 redisCacheName	
 redisCacheKey
-
-
-
-
-
