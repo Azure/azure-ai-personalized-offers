@@ -10,7 +10,7 @@
    - [Setup Azure Machine Learning](#aml)
    - [Create Azure Event Hubs](#eventhub)
    - [Create Azure Cosmos DB](#acdb)
-   - [Create Azure Data Lake Store](#adls)
+   - [Create Azure Data Lake Storage](#adls)
    - [Create Azure Redis Cache](#redis)
    - [Create Azure Functions](#af)
    - [Create Azure Stream Analytics Jobs](#asa)    
@@ -98,10 +98,11 @@ In this section we will go through the steps necessary to create the storage acc
 2. In the **Overview** panel, click **+ Add** to add a new resource. Enter **Storage account** and hit "Enter" to search.
 3. Click on **Storage account - blob, file, table, queue** offered by Microsoft (in the "Storage" category).
 4. Click **Create** at the bottom of the description panel.
-5. Enter your **unique string** for "Name".
-6. Make sure the selected resource group is the one you just created. If not, choose the resource group you created for this solution.
-7. Click the **Create** button at the bottom.
-8. Go back to your resource group overview and wait until the storage account is deployed. To check the deployment status, refresh the page or the list of resources in the resource group as needed.
+5. In the Azure Storage Account panel:
+    1. Enter your **unique string** for "Name".
+    2. Make sure the selected resource group is the one you just created. If not, choose the resource group you created for this solution.
+    3. Click the **Create** button at the bottom.
+6. Go back to your resource group overview and wait until the storage account is deployed. To check the deployment status, refresh the page or the list of resources in the resource group as needed.
 
 #### Get the Primary Key for the Azure Storage Account
 These are the steps to get the access key that will be used in later steps.
@@ -126,7 +127,7 @@ These are the steps to create the **Blob storage**.
 6. Click **OK** at the bottom of the panel.
 7. Click on the blob that you just created.
 
-At this time, if you haven't already, make sure to download the following files from the [**src**](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) directory in this repository: 
+At this time, if you haven't already, make sure to download the following files from the [***src***](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) directory in this repository: 
 
 * OfferPriority.txt
 * offers.txt
@@ -196,32 +197,21 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 ### Create an Azure Event Hub
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
 2. In the **Overview** panel, click **+ Add** to add a new resource. Type **Event Hubs** and hit "Enter" to search.
-3. Click on **Event Hubs** offered by Microsoft in the "Internet of Things" category.
+3. Click on **Event Hubs** offered by Microsoft in the "Analytics" category.
 4. Click **Create** at the bottom of the description panel.
-5. In the new panel for creating a namespace, enter your **unique string** for "Name".
-6. Click the **Create** button at the bottom of the panel.
-7. Return to your resource group's overview page. When it has finished deploying, click on the resource of type "Event Hub".
-8. Click **Scale** in the left-hand menu bar, slide the **Throughput Units** slider to 20, and click *Save* at the top.
-9. Click ***Shared access policies*** in the left-hand menu bar.
-	1. In the new panel click **RootManageSharedAccessKey**
-	2. Copy the **Primary key** using the copy button to the right of the field, and add it to your settings.txt file.
-	3. Copy the **Connection string–primary key** using the copy button to the right of the field, and add it to your settings.txt file.
-	4. Click the **x** in the top right to dismiss this panel.
-9. Click **Overview** on the left-hand menu bar, and then on the **+ Event Hub** button to add an event hub.
-10. In the new panel:
-    1. Enter **personalizedofferseh** for "Name".
-    2. Enter **16** for "Partition Count".
-    3. Enter **1** for "Message Retention".
-    4. Click **Create** at the bottom.
-11. Click on the ***Event Hubs*** option in the left-hand menu bar.
-12. Click on the event hub named **personalizedofferseh** created through the previous steps. In the new panel:
-    1. Click **+ Consumer group** at the top of the panel
-    	a. Enter **clickactivityaggcg** for the 'name' field.
-        b. Click **Create** at the bottom.
-    2. Repeat 2 more times creating the following Consumer Groups:
-    	- **clickactivitydbcg**
-    	- **clickactivitydlcg**
-
+5. In the new panel for creating a namespace:
+    1. enter your **unique string** for "Name".
+    2. Choose the **Standard** pricing tier.
+    3. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+    4. Slide the **Throughput Units** slider to 20.
+    5. Click the **Create** button at the bottom of the panel.
+6. Return to your resource group's overview page. When it has finished deploying, click on the resource of type "Event Hub".
+7. Click **Shared access policies** in the left-hand menu bar.
+    1. In the new panel click **RootManageSharedAccessKey**
+    2. Copy the **Primary key** using the copy button to the right of the field, and add it to your settings.txt file.
+    3. Copy the **Connection string–primary key** using the copy button to the right of the field, and add it to your settings.txt file.
+    4. Click the **x** in the top right to dismiss this panel.
+	
 | **Azure Event Hub**                 |                                     |
 |-------------------------------------|-------------------------------------|
 | serviceBusNamespace                 | **[unique string]**                 |
@@ -232,6 +222,21 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 | eventHubGroup1                      | clickactivityaggcg                  |
 | eventHubGroup2                      | clickactivitydbcg                   |
 | eventHubGroup3                      | clickactivitydlcg                   |
+	
+8. Click **Overview** on the left-hand menu bar, and then on the **+ Event Hub** button to add an event hub.
+9. In the new panel:
+    1. Enter **personalizedofferseh** for "Name".
+    2. Enter **16** for "Partition Count".
+    3. Enter **1** for "Message Retention".
+    4. Click **Create** at the bottom.
+10. Click on the **Event Hubs** option in the left-hand menu bar.
+11. Click on the event hub named **personalizedofferseh** created through the previous steps. In the new panel:
+    1. Click **+ Consumer group** at the top of the panel
+    	1. Enter **clickactivityaggcg** for the 'name' field.
+        2. Click **Create** at the bottom.
+    2. Repeat 2 more times creating the following Consumer Groups:
+    	- **clickactivitydbcg**
+    	- **clickactivitydlcg**
  
 <a name="acdb"></a>
 ### Create Azure Cosmos DB
@@ -242,11 +247,12 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 5. In the Azure Cosmos DB panel:
    1. Enter your **unique string** for "ID".
    2. Choose **SQL** for "API".
-   3. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+   3. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   4. Click **Create** at the bottom.
+6. Once your Cosmos DB is deployed, navigate back to the resource you have just created, then:
    1. Click on **Keys** on the left.
    2. Select **Read-write Keys** at the top of the new panel.
-   3. Use the copy button to the right of the fields **URI**, **PRIMARY KEY**, and **PRIMARY CONNECTION STRING**, and add their values to the settings.txt file.
+   3. Use the copy button to the right of the fields **URI**, **PRIMARY KEY**, and **PRIMARY CONNECTION STRING**, and add their values to the settings.txt file as follows:
 			 
 | **Azure Cosmos DB**    |                                                             |
 |------------------------|-------------------------------------------------------------|
@@ -255,15 +261,17 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 | docDbConnectionString  | **[PRIMARY CONNECTION STRING]** (remove the ";" at the end) |
 
 <a name="adls"></a>
-## Create Azure Data Lake Store
+## Create Azure Data Lake Storage
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
-2. In the **Overview** panel, click **+ Add** to add a new resource. Type **Data Lake Store** and hit "Enter" to search.
-3. Click on **Data Lake Store** offered by Microsoft in the "Storage" category.
+2. In the **Overview** panel, click **+ Add** to add a new resource. Type **Data Lake Storage** and hit "Enter" to search.
+3. Click on **Data Lake Storage Gen1** offered by Microsoft in the "Storage" category.
 4. Click **Create** at the bottom of the description panel.
-5. In the Data Lake Store panel:
+5. In the Data Lake Storage panel:
    1. Enter your **unique string** for "Name".
-   2. Click **Create** at the bottom.
- 
+   2. Choose your **subscription** and **resource group**.
+   3. Click **Create** at the bottom.
+6. Add your **unique string** to your settings.txt file.
+
 | **Azure Data Lake Store** |                     |
 |---------------------------|---------------------|
 | adlStoreAccount           | **[unique string]** |
@@ -276,9 +284,10 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 4. Click **Create** at the bottom of the description panel.
 5. In the Redis Cache panel:
    1. Enter your **unique string** for "DNS name".
-   2. Choose **Standard C2 (2.5 GB Cache, Replication)** for "Pricing tier".
-   3. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+   2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   3. Choose **Standard C2 (2.5 GB Cache, Replication)** for "Pricing tier". If only the recommended pricing tiers are shown up, click "See additional options" below the options. Then, click **Apply** at the bottom.
+   4. Click **Create** at the bottom.
+6. When it has finished deploying, navigate back to the resource you have just created, then:
    1. Click on **Access keys** on the left.
    2. Use the copy button to the right of the field **Primary**, and add the value to the settings.txt file.
 
@@ -297,47 +306,49 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 4. Click **Create** at the bottom of the description panel.
 5. In the New App Service Plan panel:
    1. Enter your **unique string** for "App Service plan".
-   2. Choose **Windows** for "Operating System".
-   3. Click on **Pricing tier**, choose **S3 Standard** and click **Select** at the bottom.
-   4. Click **Create** at the bottom.
+   2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   3. Choose **Windows** for "Operating System".
+   4. Click on **Pricing tier**, choose **S3 Standard** and click **Select** at the bottom.
+   5. Click **Create** at the bottom.
 
 ### Set up Azure Functions settings
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
 2. In the **Overview** panel, click **+ Add** to add a new resource. Type **Function App** and hit "Enter" to search.
-3. Click on **Function App** offered by Microsoft in the "Web + Mobile" category.
+3. Click on **Function App** offered by Microsoft in the "Web" category.
 4. Click **Create** at the bottom of the description panel.
 5. In the Function App panel:
    1. Enter your **unique string** for "App name".
-   2. Choose **App Service Plan** for "Hosting Plan".
-   3. Click on **App Service plan/Location**, then click on the plan you created previously.
-   4. Choose **Use existing** for "Storage", then enter your **unique string**.
-   5. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+   2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   3. Choose **App Service Plan** for "Hosting Plan".
+   4. Click on **App Service plan/Location**, then click on the plan you created previously.
+   5. Choose **Use existing** for "Storage", then enter your **unique string**.
+   6. Click **Create** at the bottom.
+6. When it has finished deploying, navigate back to the resource you have just created, then:
    1. Click on **Platform features** from the menu across the top.
    2. Click on **Application settings**.
    3. Choose **64-bit** for "Platform".
    4. Choose **On** for "Always On".
    5. Add all key-value pairs you have been storing in your settings.txt under the "Application settings" section (starting with storageAccountName).
    6. Click on **Save** at the top of the page.
-   7. Close the tab by clicking on **x**.
+   7. Close the **Application settings** tab by clicking on **x**.
 
-### Upload the Azure Functions code 
-1. From the "Application settings" tab, click on **Advanced tools (Kudu)**.
-2. In the new window that opens, click on **Debug console**, then click on **CMD**.
-3. Click on the **site** folder in the top half of the window.
+### Upload Azure Functions code 
+1. From the "Platform features" panel opened from the steps above, click on **Advanced tools(Kudu)**. 
+2. In the new window that opens, click on **Debug console** menu at the top, then click on **CMD**.
+3. Click on the **site** folder in the items table.
 4. Click on the **wwwroot** folder.
-5. Find the functions.zip file you downloaded from GitHub, then drag it from your machine to the page onto the section on the right-hand side that reads **Drag here to upload and unzip**. Alternatively, unzip the file locally and transfer all its contents by dragging them onto the page.
-6. Close the page to return to the Function Apps screen.
-7. Refresh the list of functions by clicking on the "Refresh" icon to the right of your Function Apps instance.
+5. Find the functions.zip file you downloaded from this repository under the ***src*** folder, unzip the file locally and transfer all its contents by dragging them onto the page you opened **wwwroot** folder.
+6. Close the page and return to the Function Apps screen.
+7. Refresh the list of functions by clicking on the "Refresh" icon at the right of your Function Apps instance and check if the functions you just uploaded are shown up under **Functions** expendable menu.
 
 ### Populate Cosmos DB and Redis Cache
 1. Select **SeedDocumentDb** from the list of functions.
-2. Click **Run** at the top of the page, and wait for the function to complete. You may check the execution status by clicking on **Logs** at the bottom of the page.
+2. Click **Run** at the top of the page and wait for the function to complete. You may check the execution status by clicking on **Logs** at the bottom of the page.
 3. Repeat for the function **SeedRedisCache**.
 
 <a name="asa"></a>
 ## Create Azure Stream Analytics (ASA) Jobs
-For this solution we will be creating 4 separate stream jobs, to better understand query performance.
+For this solution we will be creating 4 separate stream jobs to better understand query performance.
 
 ### Create Product Views Stream Job
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
@@ -345,9 +356,10 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 3. Click on **Stream Analytics job** offered by Microsoft in the "Internet of Things" category.
 4. Click **Create** at the bottom of the description panel.
 5. In the New Stream Analytics job panel:
-   1. Enter **productViewsJob** for "Job name".
-   2. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+    1. Enter **productViewsJob** for "Job name".
+    2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+    3. Click **Create** at the bottom.
+6. When it has finished deploying, navigate back to the resource you have just created, then:
     1. Click on **Inputs** on the left.
     2. Click on **+ Add stream input** at the top, then click on **Event Hub**.
     3. In the panel that opens:
@@ -361,7 +373,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
     5. Click on **+ Add** at the top, then click on **Javascript UDF**.
     6. In the panel that opens:
        1. Enter **productViewsJson** for "Function alias".
-       2. Copy the contents of the file **ProductViewsUDF.txt**, and replace the current function definition displayed on the right side of the screen.
+       2. Copy the contents of the file **ProductViewsUDF.txt** you downloaded from the ***src*** directory in this repository, and replace the current function definition displayed on the right side of the screen.
        3. Click **Save** at the bottom.
     7. Click on **Outputs** on the left.
     8. Click on **+ Add** at the top, then click on **Cosmos DB**.
@@ -374,7 +386,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
        6. Click **Save** at the bottom.
     9. Click on **Query** on the left.
    10. In the panel that opens:
-       1. Copy the contents of the **ProductViewsQuery.txt** file, and replace the current query displayed on the right side of the screen.
+       1. Copy the contents of the **ProductViewsQuery.txt** file you downloaded from the ***src*** directory in this repository, and replace the current query displayed on the right side of the screen.
        2. Click **Save** at the top, then confirm by clicking on **Yes**.
    11. Click on **Scale** on the left.
    12. In the panel that opens:
@@ -383,6 +395,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
    13. Click on **Overview** on the left.
    14. Click **Start** at the top.
    15. In the panel that opens, click **Start** at the bottom to start the stream job.
+       - If failed to start the strean job, then open **Overview**, click **Stop** at the top and try restart the stream job.
 
 ### Create Offer Views Stream Job
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
@@ -391,8 +404,9 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 4. Click **Create** at the bottom of the description panel.
 5. In the New Stream Analytics job panel:
    1. Enter **offerViewsJob** for "Job name".
-   2. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+   2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   3. Click **Create** at the bottom.
+6. When it has finished deploying, navigate back to the resource you have just created, then:
     1. Click on **Inputs** on the left.
     2. Click on **+ Add stream input** at the top, then click on **Event Hub**.
     3. In the panel that opens:
@@ -406,7 +420,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
     5. Click on **+ Add** at the top, then click on **Javascript UDF**.
     6. In the panel that opens:
        1. Enter **offerViewsJson** for "Function alias".
-       2. Copy the contents of the file **OfferViewsUDF.txt**, and replace the current function definition displayed on the right side of the screen.
+       2. Copy the contents of the file **OfferViewsUDF.txt** you downloaded from the ***src*** directory in this repository, and replace the current function definition displayed on the right side of the screen.
        3. Click **Save** at the bottom.
     7. Click on **Outputs** on the left.
     8. Click on **+ Add** at the top, then click on **Cosmos DB**.
@@ -419,7 +433,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
        6. Click **Save** at the bottom.
     9. Click on **Query** on the left.
    10. In the panel that opens:
-       1. Copy the contents of the **OfferViewsQuery.txt** file, and replace the current query displayed on the right side of the screen.
+       1. Copy the contents of the **OfferViewsQuery.txt** file you downloaded from the ***src*** directory in this repository, and replace the current query displayed on the right side of the screen.
        2. Click **Save** at the top, then confirm by clicking on **Yes**.
    11. Click on **Scale** on the left.
    12. In the panel that opens:
@@ -436,8 +450,9 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 4. Click **Create** at the bottom of the description panel.
 5. In the New Stream Analytics job panel:
    1. Enter **clickCountsJob** for "Job name".
-   2. Click **Create** at the bottom.
-6. Navigate back to the resource you have just created, then:
+   2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+   3. Click **Create** at the bottom.
+6. When it has finished deploying, navigate back to the resource you have just created, then:
     1. Click on **Inputs** on the left.
     2. Click on **+ Add stream input** at the top, then click on **Event Hub**.
     3. In the panel that opens:
@@ -466,7 +481,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
        6. Click **Save** at the bottom.
     9. Click on **Query** on the left.
    10. In the panel that opens:
-       1. Copy the contents of the **ClickCountsQuery.txt** file, and replace the current query displayed on the right side of the screen.
+       1. Copy the contents of the **ClickCountsQuery.txt** file you downloaded from the ***src*** directory in this repository, and replace the current query displayed on the right side of the screen.
        2. Click **Save** at the top, then confirm by clicking on **Yes**.
    11. Click on **Scale** on the left.
    12. In the panel that opens:
@@ -482,8 +497,9 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 3. Click on **Stream Analytics job** offered by Microsoft in the "Internet of Things" category.
 4. Click **Create** at the bottom of the description panel.
 5. In the New Stream Analytics job panel:
-   1. Enter **rawDataJob** for "Job name".
-   2. Click **Create** at the bottom.
+    1. Enter **rawDataJob** for "Job name".
+    2. Choose your **subscription**, **resource group**, and the **location** that your resource group resides in.
+    3. Click **Create** at the bottom.
 6. Navigate back to the resource you have just created, then:
     1. Click on **Inputs** on the left.
     2. Click on **+ Add stream input** at the top, then click on **Event Hub**.
@@ -511,7 +527,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
        5. Click **Save** at the bottom.
     9. Click on **Query** on the left.
    10. In the panel that opens:
-       1. Copy the contents of the **RawDataQuery.txt** file, and replace the current query displayed on the right side of the screen.
+       1. Copy the contents of the **RawDataQuery.txt** file you downloaded from the ***src*** directory in this repository, and replace the current query displayed on the right side of the screen.
        2. Click **Save** at the top, then confirm by clicking on **Yes**.
    11. Click on **Overview** on the left.
    12. Click **Start** at the top.
@@ -521,10 +537,7 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 ## Starting the Solution
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to your resource group.
 2. Select the resource with type "App Service".
-3. Repeat the following steps for the functions **PersonalizedOfferFunction**, **RedisProductTrigger**, **UpdateTopUsersCache**,  **UserSimulation**, and **UserSimulationStartup**:
-   1. Click on the function name on the left.
-   2. Click on **Manage** on the left.
-   3. Set the "Function State" to **Enabled**.
+3. Click on **Functions** on the left, then enable all functions.
 4. Repeat the following steps for the functions **RedisProductTrigger** and **UpdateTopUsersCache**:
    1. Click on the function name on the left.
    2. Click **Run** at the top of the page, and wait for the function to complete. You may check the execution status by clicking on **Logs** at the bottom of the page.
@@ -535,5 +548,5 @@ For this solution we will be creating 4 separate stream jobs, to better understa
 <a name="moreinfo"></a>
 ## More Information
 
-The following links provide information on [monitoring](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress), [scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) and [visualizing](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) the output of the deployed solution. Details for [stopping the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#stopping) can also be found on the same page.
+The following links provide information on [monitoring](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress), [scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) and [visualizing](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) the output of the deployed solution. Details for [stopping the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#stopping) can also be found on the same page.
 
