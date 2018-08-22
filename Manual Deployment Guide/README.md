@@ -4,31 +4,31 @@
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Architecture](#architecture)
-- [Setup Steps](#setup-steps)
-   - [General](#setup-steps)
-   - [Azure Storage](#storage)
-   - [Azure Machine Learning](#aml)
-   - [Azure Event Hubs](#eventhub)
+- [Setup Steps](#setup-steps-estimated-time-3-hours)
+   - [General](#setup-steps-estimated-time-3-hours)
+   - [Create Azure Storage](#storage)
+   - [Setup Azure Machine Learning](#aml)
+   - [Create Azure Event Hubs](#eventhub)
    - [Create Azure Cosmos DB](#acdb)
    - [Create Azure Data Lake Store](#adls)
    - [Create Azure Redis Cache](#redis)
    - [Create Azure Functions](#af)
-   - [Azure Stream Analytics](#asa)    
+   - [Create Azure Stream Analytics Jobs](#asa)    
 - [Starting the Solution](#startup)
 - [More information](#moreinfo)
 
 ## Introduction
 
-This guide will walk you through the procedure to manually create the Personalized Offers Solution. You can get an overview of the project [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/README.md) and see some details on how to work with the deployed solution [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md). 
+This guide will walk you through the procedure to manually create the Personalized Offers Solution. You can get an overview of the project [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/README.md) and see some details on how to work with the deployed solution [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md). 
 
-The necessary materials are included in the ***src*** folder in this [repository](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src). 
+The necessary materials are included in the [***src***](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) folder in this repository. 
 
 ## Prerequisites
 
 The steps described later in this guide require the following prerequisites:
 
 1. An [Azure subscription](https://azure.microsoft.com/en-us/) with login credentials
-2. The creation of:
+2. The availability of creation of:
    * 1 Data Lake Store
    * 4 Stream Jobs with a total of 43 Streaming Units
    * 1 Event Hub with 20 Throughput Units, 16 partitions and 4 Consumer Groups
@@ -38,7 +38,7 @@ Ensure adequate Data Lake Stores and Stream Processing units are available befor
 
 ## Architecture
 
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end-to-end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Azure AI platform](https://azure.microsoft.com/en-us/overview/ai-platform/), and how they are connected to each other in the end-to-end solution.
 
 ![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
@@ -50,7 +50,7 @@ The following are the steps to deploy the end-to-end solution.
 
 This tutorial will refer to files available in the Technical Deployment Guide section of the [Cortana Intelligence Personalized Offers Git repository](https://github.com/Azure/cortana-intelligence-personalized-offers/). You can download all of these files at once by clicking the "Clone or download" button.
 
-You can download or view individual files by navigating through the repository folders. If you choose this option, be sure to download the "raw" version of each file by clicking the filename to view it, then clicking "Download". You will also find a settings.txt file in the ***src*** folder that can be used to keep track of settings you will need for configuring the Azure Functions. The names provided in the settings.txt file correspond to the names of the settings, and the entries you add will be the values.
+You can download or view individual files by navigating through the repository folders. If you choose this option, be sure to download the "raw" version of each file by clicking the filename to view it, then clicking "Download". You will also find a [settings.txt](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src/settings.txt) file in the ***src*** folder that can be used to keep track of settings you will need for configuring the Azure Functions. The names provided in the settings.txt file correspond to the names of the settings, and the entries you add will be the values.
 
 ### Choose a Unique String
 
@@ -60,13 +60,13 @@ We suggest you use "[UI]poffer[N]" where [UI] are the user's initials, N is a ra
 
 ### Create an Azure Resource Group for the solution
 1. Log into the [Azure Management Portal](https://ms.portal.azure.com).
-1. Click the **Resource groups** button, and then click the **+ Add** button to add a resource group.
-1. Enter your **unique string** for the resource group and choose your subscription.
-1. For **Resource group location**, you should choose one of the following as they are the locations that offer all of the Azure services used in this guide (with the exception of Azure Data Factory, which need not be located in the same location):
-  - South Central US
-  - West Europe
-  - Southeast Asia
- - Click **Create**
+2. Click the **Resource groups** button, and then click the **+ Add** button to add a resource group.
+3. Enter your **unique string** for the resource group and choose your subscription.
+4. For **Resource group location**, you should choose one of the following as they are the locations that offer all of the Azure services used in this guide (with the exception of Azure Data Factory, which need not be located in the same location):
+    * South Central US
+    * West Europe
+    * Southeast Asia
+5. Click **Create**
 
 Please open your settings.txt file and save the information in the form of the following table, replacing the content in [] with the actual values.  
 
@@ -80,10 +80,10 @@ Please open your settings.txt file and save the information in the form of the f
 In this tutorial, all resources will be created in the resource group you just created. You can easily access these resources from the resource group overview page, which can be accessed as follows:
 
 1. Log into the [Azure Management Portal](https://ms.portal.azure.com).
-2. If you pinned the Resource Group when creating it, you will find your resource group here and can click on it to see all of the associated resources.
-3. Click the **Resource groups** button.
-4. Choose the subscription your resource group resides in.
-5. Search for (or directly select) your resource group from the list of resource groups.
+    * If you pinned the Resource Group when creating it, you will find your resource group from **Dashboard** and can click on it to see all of the associated resources.
+2. Click the **Resource groups** button.
+3. Choose the subscription your resource group resides in.
+4. Search for (or directly select) your resource group from the list of resource groups.
 
 Note that you may need to close the resource description page to add new resources.
 
@@ -107,13 +107,13 @@ In this section we will go through the steps necessary to create the storage acc
 These are the steps to get the access key that will be used in later steps.
 
 1. Click the created storage account. In the new panel, click on **Access keys**.
-2. In the new panel, click the "Click to copy" icon next to `key1`, and paste the key into your settings.txt file as detailed below.
+2. In the new panel, copy values of **Key** and **Connection string** under `key1` (use 'Click to copy' icon next to each value) and paste into your settings.txt file as detailed below.
 
 | **Azure Storage Account**      |                                                                                       |
 |--------------------------------|---------------------------------------------------------------------------------------|
 | storageAccountName             | **[unique string]**                                                                   |
-| storageAccountKey              | **[key1]**                                                                            |
-| storageAccountConnectionString | DefaultEndpointsProtocol=https;AccountName=**[uniques string]**;AccountKey=**[key1]** |
+| storageAccountKey              | **[Key]**                                                                            |
+| storageAccountConnectionString | **[Connection string]**
 
 #### Add Blob Storage and Upload Resources
 These are the steps to create the **Blob storage**.
@@ -126,7 +126,7 @@ These are the steps to create the **Blob storage**.
 6. Click **OK** at the bottom of the panel.
 7. Click on the blob that you just created.
 
-At this time, if you haven't already, make sure to download the following files from the **src** directory of the [GitHub repository](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src): 
+At this time, if you haven't already, make sure to download the following files from the [**src**](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) directory in this repository: 
 
 * OfferPriority.txt
 * offers.txt
@@ -145,17 +145,17 @@ To upload these files:
 6. Click **Upload** at the bottom of the panel.
 7. Click the **x** at the top right of the panel for uploading files to dismiss it.
 8. You should now see a list of files in the blob container.
-9. Click on the **Container properties** button at the top of the panel.
+9. Click the **Properties** button on the left-hand menu bar of your blob container panel.
 10. Click the **Copy** icon to the right of the URL field in the properties panel that opened.
 11. Paste this value into your settings.txt as shown in the table below.
 
 | **Azure Storage Blob Container Files** |                                             |
 |----------------------------------------|---------------------------------------------|
-| referenceCollectionFile1               | **[Blob Container URL]**/OfferPriority.txt  |
-| referenceCollectionFile2               | **[Blob Container URL]**/OfferThreshold.txt |
+| userFile                               | **[Blob Container URL]**/users.txt          |
 | offerFile                              | **[Blob Container URL]**/offers.txt         |
 | productFile                            | **[Blob Container URL]**/products.txt       |
-| userFile                               | **[Blob Container URL]**/users.txt          |
+| referenceCollectionFile1               | **[Blob Container URL]**/OfferPriority.txt  |
+| referenceCollectionFile2               | **[Blob Container URL]**/OfferThreshold.txt |
 | redisCacheSeedFile                     | **[Blob Container URL]**/redisSeed.txt      |
 
 <a name="aml"></a>
@@ -167,12 +167,13 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 #### Create Azure Machine Learning Workspace
 1. Go to the [Azure Portal](https://ms.portal.azure.com) and navigate to the resource group you created.
 2. In the **Overview** panel, click **+ Add** to add a new resource. Enter **Machine Learning Studio Workspace** and hit "Enter" to search.
-3. Click on **Machine Learning Studio Workspace** offered by Microsoft in the "Data + Analytics" category.
+3. Click on **Machine Learning Studio Workspace** offered by Microsoft in the Analytics category.
 4. Click the **Create** button at the bottom of the description panel.
 5. In the Machine Learning Studio workspace panel:
     1. Enter your **unique string** for "Workspace name".
-    2. Choose **Use existing** for "Storage account" and select the storage account you created earlier.  
-    3. Choose **Create new** for "Web service plan".
+    2. Choose **Use existing** for "Resource group" and select the resource group you created earlier.
+    3. Choose **Use existing** for "Storage account" and select the storage account you created earlier.  
+    4. Choose **Create new** for "Web service plan".
     5. Click on **Web service plan pricing tier**, choose **S1 Standard** and click **Select** at the bottom.
     6. Click **Create** at the bottom.
 
@@ -188,8 +189,8 @@ The model used in this guide is based on the [Personalized Offers Solution How T
 
 | **Machine Learning Web Service** |                   |
 |----------------------------------|-------------------|
-| mlPublishedExperimentKey         | **[API key]**     |
 | mlPublishedExperimentEndpoint    | **[Request URI]** |
+| mlPublishedExperimentKey         | **[API key]**     |
 
 <a name="eventhub"></a>
 ### Create an Azure Event Hub
