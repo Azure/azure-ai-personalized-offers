@@ -1,6 +1,6 @@
 # [Personalized Offers](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4)
 
-This document is focusing on the post deployment instructions for the [automated deployment](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4) through the Cortana Intelligence Gallery. The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
+This document is focusing on the post deployment instructions for the manual deployment guide. The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
 
 ### Quick links
 [Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
@@ -17,7 +17,7 @@ This document is focusing on the post deployment instructions for the [automated
 
 <a name="architecture"></a>
 ## **Architecture**
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://gallery.cortanaintelligence.com/Solution/Personalized-Offers-2) using [Cortana Intelligence Solutions](https://gallery.cortanaintelligence.com/solutions), and how they are connected to each other in the end to end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Azure AI](https://azure.microsoft.com/en-us/overview/ai-platform/), and how they are connected to each other in the end to end solution.
 
 ![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
 
@@ -107,7 +107,7 @@ You can reuse the source code in the [Manual Deployment Guide](https://github.co
 
 See the [Offer Logic Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/RetrainingModel.md) to show how to retrain your model.
 
-For more help, you can [connect with one of our partners](https://appsource.microsoft.com/en-us/product/cortana-intelligence/microsoft-cortana-intelligence.personalized-offers-for-online-retail?tab=Partners) for information on how to tailor Cortana Intelligence to your needs.
+For more help, you can [connect with one of our partners](https://azure.microsoft.com/en-us/partners/) for information on how to tailor Azure AI to your needs.
 
 
 <a name="scaling"></a>
