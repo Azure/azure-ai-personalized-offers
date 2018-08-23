@@ -1,16 +1,19 @@
-Use this file to keep track of the following variables. These will be needed for the Azure Functions to work properly. 
-Some of the values have already been filled in with the defaults we will be using.
+# Use this file to keep track of the following variables. These will be needed for the Azure Functions to work properly. 
+# Some of the values have already been filled in with the defaults we will be using.
 
 
 unique	
 
+# Azure Resource Group
 resourceGroupName	
 region	
 
+# Azure Storage Account
 storageAccountName	
 storageAccountKey	
 storageAccountConnectionString	
 
+# Azure Storage Blob Container Files
 userFile	
 offerFile 	
 productFile	
@@ -18,9 +21,11 @@ referenceCollectionFile1
 referenceCollectionFile2	
 redisCacheSeedFile	
 
+# Machine Learning Web Service
 mlPublishedExperimentEndpoint
 mlPublishedExperimentKey 
 
+# Azure Event Hub	
 serviceBusNamespace
 eventHubName	personalizedofferseh
 eventHubConnectionString	
@@ -30,9 +35,10 @@ eventHubGroup1	clickactivityaggcg
 eventHubGroup2	clickactivitydbcg
 eventHubGroup3	clickactivitydlcg
 
-docDbConnectionString 
+# Azure Cosmos DB
 docDbUri
 docDbKey
+docDbConnectionString 
 
 docDbDatabase	personalizedOffers
 docDbUserCollection	userCollection
@@ -48,7 +54,9 @@ docDbProductViewsPartition	/id
 docDbOfferViewsCollection	offerViewsCollection
 docDbOfferViewsPartition	/id
 
+# Azure Data Lake Store
 adlStoreAccount
 
+# Azure Redis Cache
 redisCacheName	
 redisCacheKey
