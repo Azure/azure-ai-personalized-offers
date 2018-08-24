@@ -67,18 +67,16 @@ The goal of this part is to get a visual overview of how the Personalized Offers
     3. Once you open the file with PowerBI, click **Edit Queries** button on the **Home** menu at the top.
     4. In the pop out window (ignore warnings shown at the center for now), you will see 9 Queries on the left hand side and on the right side you will see Query Settings. Follow the steps below for each of **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**:
         1. Select the query from the left hand side
-	2. From the **Query Settings** on the right hand side, click the **gear** icon of **Source** under the **Applied Steps** section
-  	3. Enter the URI that you got from Cosmos DB into the **URL** field and click **OK**
-  	4. A prompt should ask you for the **Account Key**. Enter the Primary Key you got from Cosmos DB there. (You should only have to do this for the first query)
-  	5. Repeat these steps for the other queries listed above
-  
+        2. From the **Query Settings** on the right hand side, click the **gear** icon of **Source** under the **Applied Steps** section
+        3. Enter the URI that you got from Cosmos DB into the **URL** field and click **OK**
+        4. A prompt should ask you for the **Account Key**. Enter the Primary Key you got from Cosmos DB there. (You should only have to do this for the first query)
+        5. Repeat these steps for the other queries listed above
     5. For the **userProductViews** query, there are some additional steps to take from the **Applied Steps** section:
-  	1. Click on the 6th step, **Expanded productviews**, gear icon
-  	2. From the popup window, click the **Load More** link near the bottom
-  	3. Verify that all products (1-25) are there in the list and select them all by using the **Select All Columns** checkbox at the top
-	4. Click **OK**
-  	5. Click on the next step, **Renamed Columns1**, and make sure the product number columns at the top are all correct and of type: 1, 2, 3, ... 25 for the columns representing the products. If prompted to okay the change, go ahead and click **Insert**.
-
+        1. Click on the 6th step, **Expanded productviews**, gear icon
+        2. From the popup window, click the **Load More** link near the bottom
+        3. Verify that all products (1-25) are there in the list and select them all by using the **Select All Columns** checkbox at the top
+        4. Click **OK**
+        5. Click on the next step, **Renamed Columns1**, and make sure the product number columns at the top are all correct and of type: 1, 2, 3, ... 25 for the columns representing the products. If prompted to okay the change, go ahead and click **Insert**.
     6. Click **Close & Apply Changes** button on the top of the window
     7. Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
 
