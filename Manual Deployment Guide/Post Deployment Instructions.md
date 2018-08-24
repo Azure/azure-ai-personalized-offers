@@ -1,26 +1,20 @@
 # [Personalized Offers](https://gallery.cortanaintelligence.com/solution/52ae278b2397486d85111307dfe680e4)
 
-This document is focusing on the post deployment instructions for the manual deployment guide. The source code of the solution as well as manual deployment instructions can be found [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide).
+This document is focusing on the post deployment instructions for the manual deployment guide. The source code of the solution as well as manual deployment instructions can be found [here](README.md).
 
-### Quick links
-[Solution Architecture](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#architecture) - overview of the architecture.
-
-[Monitor Progress](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress) - see how you can monitor the resources that have been deployed to your subscription.
-
-[Visualization Steps](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) - instructions to connect up a Power BI dashboard to your deployment that visualized the results.
-
-[Customization](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#customization) - guidance on how to customize the offer logic and retrain the model.
-
-[Scaling](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) - guidance on how to think about scaling this solution according to your needs.
-
-[Stopping the Solution](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Automated%20Deployment%20Guide/Post%20Deployment%20Instructions.md#stopping) - How to stop or delete the solution.
+### Quick Links
+- [Solution Architecture](#architecture) - Overview of the architecture
+- [Monitor Progress](#monitor-progress) - See how you can monitor the resources that have been deployed to your subscription
+- [Visualization Steps](#visualization) - Instructions to connect up a Power BI dashboard to your deployment that visualized the results
+- [Customization](#customization) - Guidance on how to customize the offer logic and retrain the model
+- [Scaling](#scaling) - Guidance on how to think about scaling this solution according to your needs
+- [Stopping the Solution](#stopping) - How to stop or delete the solution
 
 <a name="architecture"></a>
-## **Architecture**
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Azure AI](https://azure.microsoft.com/en-us/overview/ai-platform/), and how they are connected to each other in the end to end solution.
+## Architecture
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Azure AI platform](https://azure.microsoft.com/overview/ai-platform/) with [Azure services](https://azure.microsoft.com), and how they are connected to each other in the end-to-end solution.
 
-![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
-
+![Solution Diagram Picture](../Figures/PersonalizedOffersArchitecture.png)
 
 1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**, these would not be part of a production solution.
 
@@ -30,13 +24,12 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 4. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure Cosmos DB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**. 
-</Guide>
+5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure Cosmos DB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**.
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
 
 <a name="monitor-progress"></a>
-## **Monitor progress**
+## Monitor progress
 
 For each of the services in this solution going to from the resource group page to the service will provide you with some information on how the service is running. Often there is a Metrics blade listed on the left side of that service that will provide more information. For each of the services below a link is provided that explains monitoring each of the services in more detail. 
 
@@ -59,7 +52,7 @@ You can view the machine learning experiment by navigating to your Machine Learn
 
 For more information on how to monitor Azure Redis Cache take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/redis-cache/cache-how-to-monitor).
 
-## **Visualization**
+## Visualization
 Power BI dashboard can be used to visualize the real-time personalized offer data as it is being generated. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
 
 <a name="visualization"></a>
@@ -103,9 +96,9 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 
 <a name="customization"></a>
 ## **Customization**
-You can reuse the source code in the [Manual Deployment Guide](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide) to customize and rebuild the solution for your data and business needs.
+You can reuse the [source code](scr/) in the [Manual Deployment Guide](README.md) to customize and rebuild the solution for your data and business needs.
 
-See the [Offer Logic Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/RetrainingModel.md) to show how to retrain your model.
+See the [Offer Logic Documentation](OfferLogic.md) to see more information of how the offers are generated in this solution and the [Retraining Documentation](RetrainingModel.md) to show how to retrain your model.
 
 For more help, you can [connect with one of our partners](https://azure.microsoft.com/en-us/partners/) for information on how to tailor Azure AI to your needs.
 
@@ -171,7 +164,3 @@ To entirely remove the solution
 
 1. Go to your **resource group** created for this solution
 2. Click **Delete** at the top of the screen.
-
-	
-	
-	

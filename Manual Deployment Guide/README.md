@@ -1,6 +1,6 @@
 # Personalized Offers - Manual Deployment Guide
 
-# Table of Contents
+## Table of Contents
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Architecture](#architecture)
@@ -19,9 +19,9 @@
 
 ## Introduction
 
-This guide will walk you through the procedure to manually create the Personalized Offers Solution. You can get an overview of the project [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/README.md) and see some details on how to work with the deployed solution [here](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md). 
+This guide will walk you through the procedure to manually create the Personalized Offers Solution. You can get an overview of the project [here](../README.md) and see some details on how to work with the deployed solution [here](Post%20Deployment%20Instructions.md).
 
-The necessary materials are included in the [***src***](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) folder in this repository. 
+The necessary materials are included in the [***src***](src/) folder in this repository. 
 
 ## Prerequisites
 
@@ -38,9 +38,9 @@ Ensure adequate Data Lake Stores and Stream Processing units are available befor
 
 ## Architecture
 
-The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](https://github.com/Azure/cortana-intelligence-personalized-offers) using [Azure AI platform](https://azure.microsoft.com/en-us/overview/ai-platform/), and how they are connected to each other in the end-to-end solution.
+The architecture diagram shows various Azure services that are deployed by [Personalized Offers Solution](../README.md) using [Azure AI platform](https://azure.microsoft.com/overview/ai-platform/) with [Azure services](https://azure.microsoft.com), and how they are connected to each other in the end-to-end solution.
 
-![Solution Diagram](https://cloud.githubusercontent.com/assets/16085124/24881519/084cd072-1e0c-11e7-9093-7eaf48d4d513.png)
+![Solution Diagram Picture](../Figures/PersonalizedOffersArchitecture.png)
 
 ## Setup Steps (Estimated Time: 3 hours)
 
@@ -48,9 +48,9 @@ The following are the steps to deploy the end-to-end solution.
 
 ### Accessing Files in the Git Repository
 
-This tutorial will refer to files available in the Technical Deployment Guide section of the [Cortana Intelligence Personalized Offers Git repository](https://github.com/Azure/cortana-intelligence-personalized-offers/). You can download all of these files at once by clicking the "Clone or download" button.
+This tutorial will refer to files available in the Manual Deployment Guide section of the [Cortana Intelligence Personalized Offers Git repository](https://github.com/Azure/cortana-intelligence-personalized-offers/). You can download all of these files at once by clicking the "Clone or download" button.
 
-You can download or view individual files by navigating through the repository folders. If you choose this option, be sure to download the "raw" version of each file by clicking the filename to view it, then clicking "Download". You will also find a [settings.txt](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src/settings.txt) file in the ***src*** folder that can be used to keep track of settings you will need for configuring the Azure Functions. The names provided in the settings.txt file correspond to the names of the settings, and the entries you add will be the values.
+You can download or view individual files by navigating through the repository folders. If you choose this option, be sure to download the "raw" version of each file by clicking the filename to view it, then clicking "Download". You will also find a [settings.txt](src/settings.txt) file in the ***src*** folder that can be used to keep track of settings you will need for configuring the Azure Functions. The names provided in the settings.txt file correspond to the names of the settings, and the entries you add will be the values.
 
 ### Choose a Unique String
 
@@ -127,7 +127,7 @@ These are the steps to create the **Blob storage**.
 6. Click **OK** at the bottom of the panel.
 7. Click on the blob that you just created.
 
-At this time, if you haven't already, make sure to download the following files from the [***src***](https://github.com/Azure/cortana-intelligence-personalized-offers/blob/master/Manual%20Deployment%20Guide/src) directory in this repository: 
+At this time, if you haven't already, make sure to download the following files from the [***src***](src/) directory in this repository: 
 
 * OfferPriority.txt
 * offers.txt
@@ -548,5 +548,5 @@ For this solution we will be creating 4 separate stream jobs to better understan
 <a name="moreinfo"></a>
 ## More Information
 
-The following links provide information on [monitoring](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#monitor-progress), [scaling](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#scaling) and [visualizing](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#visualization) the output of the deployed solution. Details for [stopping the solution](https://github.com/Azure/cortana-intelligence-personalized-offers-retail-2/blob/master/Manual%20Deployment%20Guide/Post%20Deployment%20Instructions.md#stopping) can also be found on the same page.
+Visit [here](Post%20Deployment%20Instructions.md) for the post-deployment instructions. The page provides information on [monitoring](Post%20Deployment%20Instructions.md#monitor-progress), [scaling](Post%20Deployment%20Instructions.md#scaling) and [visualizing](Post%20Deployment%20Instructions.md#visualization) the output of the deployed solution. Details for [stopping the solution](Post%20Deployment%20Instructions.md#stopping) can also be found on the same page.
 
