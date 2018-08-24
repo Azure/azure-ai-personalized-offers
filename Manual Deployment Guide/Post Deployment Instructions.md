@@ -16,7 +16,7 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 ![Solution Diagram Picture](../Figures/PersonalizedOffersArchitecture.png)
 
-1.	User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**, these would not be part of a production solution.
+1. User activity on the website is simulated with an **Azure Function** and a pair of **Azure Storage Queues**, these would not be part of a production solution.
 
 2. Personalized Offer Functionality is implemented as an **Azure Function**. This is the key function that ties everything together to produce an offer and record activity. Data is read in from **Azure Redis Cache** and **Azure Cosmos DB**, product popularity probability is returned by **Azure Machine Learning** (if no history for the user exists then cold start values for product popularity are read in from **Azure Redis Cache**). 
 
@@ -24,33 +24,28 @@ The architecture diagram shows various Azure services that are deployed by [Pers
 
 4. The offer is returned to the User. In our simulation this is done by writing to an **Azure Storage Queue** and picked up by an **Azure Function** in order to produce the next user action.
 
-5.	**Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure Cosmos DB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**.
+5. **Azure Stream Analytics** analyzes the data to provide near real-time analytics on the input stream from the **Azure Event Hub**. The aggregated data is sent to **Azure Cosmos DB** and directly published to **PowerBI** for visualization.  The raw data is sent to **Azure Data Lake Storage**.
 
 All the resources listed above besides Power BI are already deployed in your subscription. The following instructions will guide you on how to start the solution, monitor your solution and create visualizations in Power BI.
 
 <a name="monitor-progress"></a>
 ## Monitor progress
-
-For each of the services in this solution going to from the resource group page to the service will provide you with some information on how the service is running. Often there is a Metrics blade listed on the left side of that service that will provide more information. For each of the services below a link is provided that explains monitoring each of the services in more detail. 
+Your resource group page in the [Azure Portal](https://ms.portal.azure.com) will provide you with some information on how the each of the services in this solution is running. You can use **Metrics** menu on the left side of the resource group panel for more information.
 
 #### Azure App Service ####
-For more information on how to monitor Azure App Service you can take a look [here](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-monitor).
+For more information on how to monitor Azure App Service, take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-monitor).
 
 #### Azure Cosmos DB ####
-For more information on how to monitor Cosmos DB take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-monitor-accounts).
+For more information on how to monitor Cosmos DB, take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-accounts).
 
 #### Azure Functions ####
-
-For more information on how to monitor Azure Functions take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-accounts).
+For more information on how to monitor Azure Functions, take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-monitoring).
 
 #### Azure Machine Learning Web Service
-
-You can view the machine learning experiment by navigating to your Machine Learning Workspace. The machine learning model is deployed as an Azure Web Service. For more information on monitoring the web service endpoint take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice).
-
+You can view the machine learning experiment by navigating to your Machine Learning Workspace. The machine learning model is deployed as an Azure Web Service. For more information on monitoring the web service endpoint, take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-manage-new-webservice).
 
 #### Azure Redis Cache ####
-
-For more information on how to monitor Azure Redis Cache take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/redis-cache/cache-how-to-monitor).
+For more information on how to monitor Azure Redis Cache, take a look at the documentation [here](https://docs.microsoft.com/en-us/azure/redis-cache/cache-how-to-monitor).
 
 ## Visualization
 Power BI dashboard can be used to visualize the real-time personalized offer data as it is being generated. The following instructions will guide you to build a dashboard to visualize data from database and from real-time data stream.
@@ -62,37 +57,30 @@ The goal of this part is to get a visual overview of how the Personalized Offers
 
 > Note:  1) In this step, the prerequisite is to download and install the free software [Power BI desktop](https://powerbi.microsoft.com/desktop). 2) We recommend you start this process 2-3 hours after you deploy the solution so that you have more data points to visualize.
 
-1.  Get the database credentials.
-
-    You can find your Cosmos DB URI and Primary Key. Go to the Cosmos DB page for your solution by going to the Resource page for your solution and selecting the Cosmos DB Service. On the left side of the page there is a **Keys** section where this information can be found.
+1. Get the database credentials.
+    You can find your Cosmos DB URI and Primary Key from your Cosmos DB resource page in the [Azure Portal](https://ms.portal.azure.com). Go to the Resource group page for your solution and select your Cosmos DB service. On the left side of the page there is a **Keys** section where this information can be found.
     
-2.	Update the data source of the Power BI file
-	
-  - Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
-
-
-  -	In this GitHub repository, you can download either **'PersonalizedOffersSolutionLandscape.pbix'** or **'PersonalizedOffersSolutionPortrait.pbix'** file under the folder **'Power BI'** and then open it. The portrait one has all of the information in one tab and the landscape one uses two tabs. **Note:** If you see an error massage, please make sure you have installed the latest version of Power BI Desktop.
-
-  - On the top of the file, click **‘Edit Queries’** button.
-
-  - In the pop out window (ignore warning about credentials as you will be entering them shortly), you will see 9 Queries on the left hand side and on the right side you will see Query Settings. For each of the following queries: **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**, follow the steps below:
+2. Update the data source of the Power BI file	
+    1. Make sure you have installed the latest version of [Power BI desktop](https://powerbi.microsoft.com/desktop).
+    2. Download either ***PersonalizedOffersSolutionLandscape.pbix*** or ***PersonalizedOffersSolutionPortrait.pbix*** file from the folder [***PowerBI***](../PowerBI/) in this GitHub repository and open it. The portrait one has all of the information in one tab and the landscape one uses two tabs.
+    > Note: If you see an error massage while opening the file, please make sure you have installed the latest version of Power BI Desktop.
+    3. Once you open the file with PowerBI, click **Edit Queries** button on the **Home** menu at the top.
+    4. In the pop out window (ignore warnings shown at the center for now), you will see 9 Queries on the left hand side and on the right side you will see Query Settings. Follow the steps below for each of **offerCollection**, **products**, **userProductViews**, **referenceCollection**, **users**, **userOfferViews**, and **OfferProducts**:
+        1. Select the query from the left hand side
+	2. From the **Query Settings** on the right hand side, click the **gear** icon of **Source** under the **Applied Steps** section
+  	3. Enter the URI that you got from Cosmos DB into the **URL** field and click **OK**
+  	4. A prompt should ask you for the **Account Key**. Enter the Primary Key you got from Cosmos DB there. (You should only have to do this for the first query)
+  	5. Repeat these steps for the other queries listed above
   
-  	- Select the query on the left
-  	- Click the **gear** icon to the right of **Source** in the **Applied Steps** section of the **Query Settings** 
-  	- Put in the URI that you got from Cosmos DB into the **URL** field and click **OK**
-  	- A prompt should ask you for the Account Key enter the Primary Key from Cosmos DB in the **Account key** field (You should only have to do this for the first query)
-  	- Repeat these steps for the other queries listed above.
-  
-  - For these **userProductViews** there are some additional steps to take. Each of the **Applied Steps** must be examined to see that the right values are there.
-  	- click on the 6th step **Expanded productviews** gear icon.
-  	- in this window click the **Load More** link near the bottom.
-  	- verify that all products 1-25 are there in the list and select them all (using the **Select All Columns** checkbox at the top).
-  	- click **OK**
-  	- click on the next step **Renamed Columns1** and make sure the product number columns at the top are all correct and of type: 1, 2, 3, ... 25 for the columns representing the products. If prompted to okay the change go ahead and click **Insert**.
+    5. For the **userProductViews** query, there are some additional steps to take from the **Applied Steps** section:
+  	1. Click on the 6th step, **Expanded productviews**, gear icon
+  	2. From the popup window, click the **Load More** link near the bottom
+  	3. Verify that all products (1-25) are there in the list and select them all by using the **Select All Columns** checkbox at the top
+	4. Click **OK**
+  	5. Click on the next step, **Renamed Columns1**, and make sure the product number columns at the top are all correct and of type: 1, 2, 3, ... 25 for the columns representing the products. If prompted to okay the change, go ahead and click **Insert**.
 
-  - On the top of the screen, you will see a button **'Close & Apply Changes'**,
-
-  - Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
+    6. Click **Close & Apply Changes** button on the top of the window
+    7. Now the dashboard is updated to connect to your database. You can click **'Refresh'** button on the top to get the latest visualization.
 
 <a name="customization"></a>
 ## **Customization**
